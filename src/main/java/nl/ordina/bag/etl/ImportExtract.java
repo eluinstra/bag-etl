@@ -17,7 +17,7 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.job.ImportExtractJob;
+import nl.ordina.bag.etl.service.ImportExtractJob;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportExtract

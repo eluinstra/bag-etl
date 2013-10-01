@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.ordina.bag.etl.job;
+package nl.ordina.bag.etl.service;
 
 import org.apache.commons.lang.StringUtils;
 

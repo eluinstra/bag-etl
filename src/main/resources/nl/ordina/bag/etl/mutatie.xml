@@ -7,7 +7,7 @@
 	<import resource="classpath:nl/ordina/bag/etl/datasource.xml" />
 	<import resource="classpath:nl/ordina/bag/etl/dao.xml" />
 
-	<bean id="bagMutatieLeveringValidator" class="nl.ordina.bag.etl.job.BAGExtractLeveringValidator">
+	<bean id="bagMutatieLeveringValidator" class="nl.ordina.bag.etl.service.BAGExtractLeveringValidator">
 		<property name="klantnummer" value="${bagLeveringInfo.klantnummer}"/>
 		<property name="productcode" value="${bagLeveringInfo.mutatie.productcode}"/>
 		<property name="gebiedType" value="${bagLeveringInfo.gebiedType}"/>
@@ -17,7 +17,7 @@
 		<property name="productversie" value="${bagLeveringInfo.productversie}"/>
 	</bean>
 
-	<bean id="importMutatiesFileJob" class="nl.ordina.bag.etl.job.ImportMutatiesFileJob">
+	<bean id="importMutatiesFileJob" class="nl.ordina.bag.etl.service.ImportMutatiesFileJob">
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagExtractLeveringValidator" ref="bagMutatieLeveringValidator"/>
 	</bean>
@@ -35,7 +35,7 @@
 		<property name="mutationListener" ref="mutationListener"/>
 	</bean>
 
-	<bean id="importMutatiesJob" class="nl.ordina.bag.etl.job.ImportMutatiesJob">
+	<bean id="importMutatiesJob" class="nl.ordina.bag.etl.service.ImportMutatiesJob">
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagDAO" ref="bagDAO"/>
 		<property name="mutatiesFileProcessor" ref="mutatiesFileProcessor"/>

@@ -17,8 +17,8 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.job.ImportMutatiesFileJob;
-import nl.ordina.bag.etl.job.ImportMutatiesJob;
+import nl.ordina.bag.etl.service.ImportMutatiesFileJob;
+import nl.ordina.bag.etl.service.ImportMutatiesJob;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportMutaties
