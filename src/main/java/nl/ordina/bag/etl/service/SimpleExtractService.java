@@ -85,7 +85,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing woonplaats: " + woonplaats.getIdentificatie());
+					logger.debug("Inserting woonplaats: " + woonplaats.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getWoonplaats(woonplaats));
 				}
 				else
@@ -103,7 +103,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing openbare ruimte: " + openbareRuimte.getIdentificatie());
+					logger.debug("Inserting openbare ruimte: " + openbareRuimte.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getOpenbareRuimte(openbareRuimte));
 				}
 				else
@@ -121,7 +121,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing nummeraanduiding: " + nummeraanduiding.getIdentificatie());
+					logger.debug("Inserting nummeraanduiding: " + nummeraanduiding.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getNummeraanduiding(nummeraanduiding));
 				}
 				else
@@ -139,7 +139,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing pand: " + pand.getIdentificatie());
+					logger.debug("Inserting pand: " + pand.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getPand(pand));
 				}
 				else
@@ -157,7 +157,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing verblijfsobject: " + verblijfsobject.getIdentificatie());
+					logger.debug("Inserting verblijfsobject: " + verblijfsobject.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getVerblijfsobject(verblijfsobject));
 				}
 				else
@@ -175,7 +175,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing ligplaats: " + ligplaats.getIdentificatie());
+					logger.debug("Inserting ligplaats: " + ligplaats.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getLigplaats(ligplaats));
 				}
 				else
@@ -193,7 +193,7 @@ public class SimpleExtractService
 			{
 				if (skipObjects == 0)
 				{
-					logger.debug("Processing standplaats: " + standplaats.getIdentificatie());
+					logger.debug("Inserting standplaats: " + standplaats.getIdentificatie());
 					bagDAO.insert(bagObjectFactory.getStandplaats(standplaats));
 				}
 				else
