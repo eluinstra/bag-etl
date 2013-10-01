@@ -24,7 +24,7 @@
 	</appender>
 
 	<logger name="nl.ordina.bag.etl">
-		<level value="debug"/>
+		<level value="info"/>
 	</logger>
 	
 	<logger name="org.apache">
