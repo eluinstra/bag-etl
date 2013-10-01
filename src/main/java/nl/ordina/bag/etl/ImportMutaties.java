@@ -53,7 +53,7 @@ public class ImportMutaties
 			logger.info("Import Mutaties started.");
 			mutatiesService.importMutaties();
 			logger.info("Import Mutaties ended.");
-			System.out.println("ImportMutaties finished");
+			logger.info("ImportMutaties finished");
 		}
 		else
 			System.out.println("Usage: nl.ordina.bag.etl.ImportMutaties <filename>[,<filename>]");
