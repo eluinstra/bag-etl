@@ -15,7 +15,6 @@
  */
 package nl.ordina.bag.etl.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,7 +36,6 @@ import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -68,9 +66,7 @@ public class SimpleExtractService
 				else if (filename.matches("9999(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
 				{
 					logger.info("Processing file: " + filename + " started");
-					//parseFile(stream);
-					byte[] b = IOUtils.toByteArray(stream);
-					ProcessXML(new ByteArrayInputStream(b));
+					processXML(stream);
 					logger.info("Processing file: " + filename + " finished");
 				}
 				else
@@ -80,7 +76,7 @@ public class SimpleExtractService
 		zipStreamReader.read(extractFile);
 	}
 	
-	protected void ProcessXML(InputStream stream)
+	protected void processXML(InputStream stream)
 	{
 		ExtractParser reader = new ExtractParser()
 		{
