@@ -34,11 +34,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-//import org.apache.xml.serialize.OutputFormat;
-//import org.apache.xml.serialize.XMLSerializer;
-//import org.w3c.dom.Document;
-//import org.xml.sax.SAXException;
-
 public class XMLFormatter
 {
 
@@ -55,28 +50,14 @@ public class XMLFormatter
 		transformer.transform(source,result);
 	}
 
-//	public static void format(InputStream source, OutputStream result) throws ParserConfigurationException, SAXException, IOException
-//	{
-//		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//		DocumentBuilder db = dbf.newDocumentBuilder();
-//		Document document = db.parse(source);
-//		OutputFormat format = new OutputFormat();
-//		format.setLineWidth(65);
-//		format.setIndenting(true);
-//		format.setIndent(2);
-//		Writer w = new OutputStreamWriter(result);
-//		XMLSerializer serializer = new XMLSerializer(w,format);
-//		serializer.serialize(document);
-//	}
-
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length == 1)
 		{
+			System.out.println("XMLFormatter started");
 			String filename = args[0];
 			format(new StreamSource(new File(filename)),new StreamResult(new File(filename + ".xml")));
-//			format(new FileInputStream(new File(filename)),new FileOutputStream(new File(filename + ".xml")));
-			System.out.println("Done.");
+			System.out.println("XMLFormatter finished");
 		}
 		else
 			System.out.println("Usage: nl.ordina.bag.etl.XMLFormatter <filename>");
