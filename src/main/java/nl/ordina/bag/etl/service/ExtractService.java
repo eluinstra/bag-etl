@@ -68,7 +68,7 @@ public class ExtractService
 	protected BAGExtractLeveringValidator bagExtractLeveringValidator;
 	protected long skipObjects;
 
-	public void importExtract(File extractFile) throws ZipException, IOException, ParseException
+	public void importExtract(File extractFile) throws ZipException, IOException, ParseException, JAXBException
 	{
 		ZipFile zipFile = new ZipFile(extractFile);
 		BAGExtractLevering levering = processFile(zipFile,"Leveringsdocument-BAG-Extract.xml");
@@ -85,21 +85,10 @@ public class ExtractService
 		zipFile.close();
 	}
 
-	protected BAGExtractLevering processFile(ZipFile zipFile, final String filename) throws ProcessorException
+	protected BAGExtractLevering processFile(ZipFile zipFile, final String filename) throws JAXBException, IOException
 	{
-		try
-		{
-			ZipEntry entry = zipFile.getEntry(filename);
-			return entry == null ? null : XMLMessageBuilder.getInstance(BAGExtractLevering.class).handle(zipFile.getInputStream(entry));
-		}
-		catch (JAXBException e)
-		{
-			throw new ProcessingException(e);
-		}
-		catch (IOException e)
-		{
-			throw new ProcessingException(e);
-		}
+		ZipEntry entry = zipFile.getEntry(filename);
+		return entry == null ? null : XMLMessageBuilder.getInstance(BAGExtractLevering.class).handle(zipFile.getInputStream(entry));
 	}
 
 	protected Map<String,String> getFiles(BAGExtractLevering levering)
