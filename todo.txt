@@ -1,0 +1,2 @@
+- use TrueZip / TrueVFS / java Zip FileSystemProvider (NIO.2)???
+- move processing functionality from jobs to new processors???

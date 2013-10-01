@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="classpath:nl/ordina/bag/etl/applicationConfig.xml" />
+	<import resource="classpath:nl/ordina/bag/etl/datasource.xml" />
+	<import resource="classpath:nl/ordina/bag/etl/dao.xml" />
+
+	<bean id="bagExtractLeveringValidator" class="nl.ordina.bag.etl.job.BAGExtractLeveringValidator">
+		<property name="klantnummer" value="${bagLeveringInfo.klantnummer}"/>
+		<property name="productcode" value="${bagLeveringInfo.extract.productcode}"/>
+		<property name="gebiedType" value="${bagLeveringInfo.gebiedType}"/>
+		<property name="gegevensvariant" value="${bagLeveringInfo.gegevensvariant}"/>
+		<property name="formaat" value="${bagLeveringInfo.formaat}"/>
+		<property name="producttype" value="${bagLeveringInfo.extract.producttype}"/>
+		<property name="productversie" value="${bagLeveringInfo.productversie}"/>
+	</bean>
+
+	<bean id="importBAGExtractJob" class="nl.ordina.bag.etl.job.ImportExtractMTJob">
+		<property name="maxThreads" value="${job.importExtract.maxThreads}"/>
+		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
+		<property name="bagDAO" ref="bagDAO"/>
+		<property name="bagObjectFactory" ref="bagObjectFactory"/>
+		<property name="bagExtractLeveringValidator" ref="bagExtractLeveringValidator"/>
+	</bean>
+
+</beans>

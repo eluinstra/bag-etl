@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="bagDAO" class="nl.ordina.bag.etl.dao.BAGDAOFactory">
+		<property name="dataSource" ref="bagDataSource"/>
+		<property name="transactionTemplate" ref="bagTransactionTemplate"/>
+		<property name="jdbcTemplate" ref="bagJdbcTemplate"/>
+	</bean>
+
+	<bean id="bagMutatiesDAO" class="nl.ordina.bag.etl.dao.BAGMutatiesDAOFactory">
+		<property name="dataSource" ref="bagDataSource"/>
+		<property name="transactionTemplate" ref="bagTransactionTemplate"/>
+		<property name="jdbcTemplate" ref="bagJdbcTemplate"/>
+	</bean>
+
+	<bean id="bagObjectFactory" class="nl.ordina.bag.etl.model.BAGObjectFactory">
+		<property name="bagGeometrieHandler">
+			<bean class="nl.ordina.bag.etl.xml.BAGGeometrieHandler"/>
+		</property>
+	</bean>
+
+</beans>

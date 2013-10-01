@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="bag.log"/>
+		<param name="DatePattern" value="yyyyMMdd'.log'"/>
+		<param name="Threshold" value="debug"/>
+		<param name="Append" value="true"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<appender-ref ref="CONSOLE"/>
+	</appender>
+
+	<logger name="nl.ordina.bag.etl">
+		<level value="debug"/>
+	</logger>
+	
+	<logger name="org.apache">
+		<level value="warn"/>
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="warn"/>
+	</logger>
+
+	<logger name="com.mchange.v2">
+		<level value="warn"/>
+	</logger>
+
+	<root>
+		<priority value="info"/>
+		<appender-ref ref="ASYNC"/>
+	</root>
+
+</log4j:configuration>

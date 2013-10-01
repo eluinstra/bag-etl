@@ -1,0 +1,10 @@
+BAG ETL Adapter
+Copyright 2013 Ordina
+
+This product includes software developed at The Apache Software Foundation
+(http://www.apache.org/) under Apache License, Version 2.0
+
+This product includes the following schemas and specifications
+developed by Kadaster (http://www.kadaster.nl/):
+- http://www.kadaster.nl/schemas/bag-verstrekkingen/extract-meta/v20090901
+- http://www.kadaster.nl/schemas/bag-verstrekkingen/extract-producten-lvc/v20090901
