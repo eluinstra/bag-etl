@@ -17,8 +17,8 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.service.ImportMutatiesFileJob;
-import nl.ordina.bag.etl.service.ImportMutatiesJob;
+import nl.ordina.bag.etl.service.ImportMutatiesFileService;
+import nl.ordina.bag.etl.service.ImportMutatiesService;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportMutaties
@@ -29,11 +29,11 @@ public class ImportMutaties
 		{
 			System.out.println("ImportMutaties started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
-			ImportMutatiesFileJob importMutatiesFileJob = (ImportMutatiesFileJob)serviceLocator.get("importMutatiesFileJob");
-			ImportMutatiesJob importMutatiesJob = (ImportMutatiesJob)serviceLocator.get("importMutatiesJob");
+			ImportMutatiesFileService importMutatiesFileService = (ImportMutatiesFileService)serviceLocator.get("importMutatiesFileJob");
+			ImportMutatiesService importMutatiesService = (ImportMutatiesService)serviceLocator.get("importMutatiesJob");
 			for (String filename : args[0].split(","))
-				importMutatiesFileJob.execute(new File(filename.trim()));
-			importMutatiesJob.execute();
+				importMutatiesFileService.execute(new File(filename.trim()));
+			importMutatiesService.execute();
 			System.out.println("ImportMutaties finished");
 		}
 		else

@@ -41,7 +41,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SimpleImportExtractJob
+public class SimpleImportExtractService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGDAO bagDAO;
@@ -244,7 +244,7 @@ public class SimpleImportExtractJob
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
-		SimpleImportExtractJob job = new SimpleImportExtractJob();
+		SimpleImportExtractService job = new SimpleImportExtractService();
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 

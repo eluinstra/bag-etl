@@ -29,7 +29,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SimpleImportMutatiesFileJob
+public class SimpleImportMutatiesFileService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	private BAGMutatiesDAO bagMutatiesDAO;
@@ -65,7 +65,7 @@ public class SimpleImportMutatiesFileJob
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
-		SimpleImportMutatiesFileJob importMutatiesFile = new SimpleImportMutatiesFileJob();
+		SimpleImportMutatiesFileService importMutatiesFile = new SimpleImportMutatiesFileService();
 		importMutatiesFile.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
 		importMutatiesFile.execute(new SimpleDateFormat("ddMMyyyy").parse("01042011"),new SimpleDateFormat("ddMMyyyy").parse("02042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
 		importMutatiesFile.execute(new SimpleDateFormat("ddMMyyyy").parse("02042011"),new SimpleDateFormat("ddMMyyyy").parse("03042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));

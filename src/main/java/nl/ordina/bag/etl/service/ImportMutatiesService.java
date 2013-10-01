@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-public class ImportMutatiesJob
+public class ImportMutatiesService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGMutatiesDAO bagMutatiesDAO;
@@ -111,7 +111,7 @@ public class ImportMutatiesJob
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
 		
-		ImportMutatiesJob importMutaties = new ImportMutatiesJob();
+		ImportMutatiesService importMutaties = new ImportMutatiesService();
 		importMutaties.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
 		importMutaties.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		

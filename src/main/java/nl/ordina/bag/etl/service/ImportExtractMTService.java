@@ -44,7 +44,7 @@ import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 
-public class ImportExtractMTJob extends ImportExtractService
+public class ImportExtractMTService extends ImportExtractService
 {
 	protected ExecutorService executorService;
 	protected int maxThreads = 4;
@@ -275,7 +275,7 @@ public class ImportExtractMTJob extends ImportExtractService
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
-		ImportExtractMTJob job = new ImportExtractMTJob();
+		ImportExtractMTService job = new ImportExtractMTService();
 		job.setMaxThreads(8);
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));

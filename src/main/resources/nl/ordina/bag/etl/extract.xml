@@ -17,7 +17,7 @@
 		<property name="productversie" value="${bagLeveringInfo.productversie}"/>
 	</bean>
 
-	<bean id="importBAGExtractJob" class="nl.ordina.bag.etl.service.ImportExtractMTJob">
+	<bean id="importBAGExtractJob" class="nl.ordina.bag.etl.service.ImportExtractMTService">
 		<property name="maxThreads" value="${job.importExtract.maxThreads}"/>
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagDAO" ref="bagDAO"/>
