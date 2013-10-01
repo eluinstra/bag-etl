@@ -28,14 +28,11 @@ import javax.xml.validation.Validator;
 import nl.ordina.bag.etl.ValidationException;
 import nl.ordina.bag.etl.ValidatorException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class SchemaValidator
 {
-	private transient Log logger = LogFactory.getLog(this.getClass());
 	private Schema schema;
 
 	public SchemaValidator(String xsdFile)
@@ -47,8 +44,7 @@ public class SchemaValidator
 		}
 		catch (SAXException e)
 		{
-			logger.fatal("Error creating XSD validator using file: " + xsdFile,e);
-			throw new ValidatorException(e);
+			throw new ValidatorException("Error creating XSD validator using file: " + xsdFile,e);
 		}
 	}
 	
