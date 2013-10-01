@@ -15,11 +15,11 @@
  */
 package nl.ordina.bag.etl.service;
 
-import org.apache.commons.lang.StringUtils;
-
 import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtractLevering;
-import nl.ordina.bag.etl.Utils;
+import nl.ordina.bag.etl.Utils.FileType;
 import nl.ordina.bag.etl.ValidationException;
+
+import org.apache.commons.lang.StringUtils;
 
 public class BAGExtractLeveringValidator
 {
@@ -46,10 +46,10 @@ public class BAGExtractLeveringValidator
 		this.productversie = productversie;
 	}
 
-	void validate(BAGExtractLevering bagExtractLevering)
+	void validate(FileType fileType, BAGExtractLevering bagExtractLevering)
 	{
 		if (bagExtractLevering == null)
-			throw new ValidationException(Utils.BAG_EXTRACT_LEVERING_FILENAME.concat(" not found!"));
+			throw new ValidationException(fileType.filename.concat(" not found!"));
 		validate("Klantnummer",klantnummer,bagExtractLevering.getMetadata().getKlantgegevens().getKlantnummer());
 		validate("Productcode",productcode,bagExtractLevering.getMetadata().getProductgegevens().getProductcode());
 		validate("GebiedType",gebiedType,bagExtractLevering.getMetadata().getProductgegevens().getGebiedType());

@@ -45,6 +45,7 @@ import nl.ordina.bag.etl.Constants.ProcessingStatus;
 import nl.ordina.bag.etl.ProcessingException;
 import nl.ordina.bag.etl.ProcessorException;
 import nl.ordina.bag.etl.Utils;
+import nl.ordina.bag.etl.Utils.FileType;
 import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.dao.DAOException;
@@ -71,8 +72,8 @@ public class ExtractService
 	public void importExtract(File extractFile) throws ZipException, IOException, ParseException, JAXBException
 	{
 		ZipFile zipFile = new ZipFile(extractFile);
-		BAGExtractLevering levering = Utils.readBagExtractLevering(zipFile);
-		bagExtractLeveringValidator.validate(levering);
+		BAGExtractLevering levering = Utils.readBagExtractLevering(zipFile,FileType.EXTRACT);
+		bagExtractLeveringValidator.validate(FileType.EXTRACT,levering);
 		processBAGExtractFile(levering,zipFile);
 
 		Date date = new SimpleDateFormat(Constants.BAG_DATE_FORMAT).parse(levering.getAntwoord().getVraag().getLVCExtract().getStandTechnischeDatum());

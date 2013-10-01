@@ -29,6 +29,7 @@ import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtr
 import nl.ordina.bag.etl.Constants;
 import nl.ordina.bag.etl.ProcessingException;
 import nl.ordina.bag.etl.Utils;
+import nl.ordina.bag.etl.Utils.FileType;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
@@ -45,8 +46,8 @@ public class MutatiesFileService
 	public void importMutatiesFile(File mutatiesFile) throws ZipException, IOException, JAXBException
 	{
 		ZipFile zipFile = new ZipFile(mutatiesFile);
-		BAGExtractLevering levering = Utils.readBagExtractLevering(zipFile);
-		bagExtractLeveringValidator.validate(levering);
+		BAGExtractLevering levering = Utils.readBagExtractLevering(zipFile,FileType.MUTATIES);
+		bagExtractLeveringValidator.validate(FileType.MUTATIES,levering);
 		Date dateFrom = levering.getAntwoord().getVraag().getMUTExtract().getMutatieperiode().getMutatiedatumVanaf().toGregorianCalendar().getTime();
 		Date dateTo = levering.getAntwoord().getVraag().getMUTExtract().getMutatieperiode().getMutatiedatumTot().toGregorianCalendar().getTime();
 		if (bagMutatiesDAO.existsMutatiesFile(dateFrom))

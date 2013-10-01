@@ -13,11 +13,21 @@ import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 
 public class Utils
 {
-	public static final String BAG_EXTRACT_LEVERING_FILENAME = "Leveringsdocument-BAG-Mutaties.xml";
-
-	public static BAGExtractLevering readBagExtractLevering(ZipFile zipFile) throws IOException, JAXBException
+	public enum FileType
 	{
-		return read(XMLMessageBuilder.getInstance(BAGExtractLevering.class),BAG_EXTRACT_LEVERING_FILENAME,zipFile);
+		EXTRACT("Leveringsdocument-BAG-Extract.xml"), MUTATIES("Leveringsdocument-BAG-Mutaties.xml");
+		
+		public String filename;
+
+		FileType(String filename)
+		{
+			this.filename = filename;
+		}
+	}
+
+	public static BAGExtractLevering readBagExtractLevering(ZipFile zipFile, FileType fileType) throws IOException, JAXBException
+	{
+		return read(XMLMessageBuilder.getInstance(BAGExtractLevering.class),fileType.filename,zipFile);
 	}
 	
 	public static <T> T read(XMLMessageBuilder<T> messageBuilder, String filename, ZipFile zipFile) throws IOException, JAXBException
