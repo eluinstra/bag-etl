@@ -17,7 +17,7 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.service.ImportExtractJob;
+import nl.ordina.bag.etl.service.ImportExtractService;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportExtract
@@ -28,8 +28,8 @@ public class ImportExtract
 		{
 			System.out.println("ImportExtract started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/extract.xml");
-			ImportExtractJob importExtractJob = (ImportExtractJob)serviceLocator.get("importBAGExtractJob");
-			importExtractJob.execute(new File(args[0]));
+			ImportExtractService importExtractService = (ImportExtractService)serviceLocator.get("importBAGExtractJob");
+			importExtractService.execute(new File(args[0]));
 			System.out.println("ImportExtract finished");
 		}
 		else

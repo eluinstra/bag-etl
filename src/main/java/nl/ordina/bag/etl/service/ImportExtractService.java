@@ -56,7 +56,7 @@ import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ImportExtractJob
+public class ImportExtractService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGMutatiesDAO bagMutatiesDAO;
@@ -325,7 +325,7 @@ public class ImportExtractJob
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
-		ImportExtractJob job = new ImportExtractJob();
+		ImportExtractService job = new ImportExtractService();
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 		job.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXEE02","NEDERLAND","LEVENSCYCLUS","XML","EENMALIG_EXTRACT","02"));

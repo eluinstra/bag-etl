@@ -44,7 +44,7 @@ import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 
-public class ImportExtractMTJob extends ImportExtractJob
+public class ImportExtractMTJob extends ImportExtractService
 {
 	protected ExecutorService executorService;
 	protected int maxThreads = 4;
