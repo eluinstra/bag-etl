@@ -44,6 +44,7 @@ import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.Constants.ProcessingStatus;
 import nl.ordina.bag.etl.ProcessingException;
 import nl.ordina.bag.etl.ProcessorException;
+import nl.ordina.bag.etl.ValidationException;
 import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.dao.DAOException;
@@ -72,10 +73,7 @@ public class ExtractService
 		ZipFile zipFile = new ZipFile(extractFile);
 		BAGExtractLevering levering = processFile(zipFile,"Leveringsdocument-BAG-Extract.xml");
 		if (levering == null)
-		{
-			logger.warn("Leveringsdocument-BAG-Mutaties.xml not found!");
-			return;
-		}
+			throw new ValidationException("Leveringsdocument-BAG-Mutaties.xml not found!");
 		if (bagExtractLeveringValidator != null)
 			bagExtractLeveringValidator.validate(levering);
 		processBAGExtractFile(levering,zipFile);
