@@ -17,20 +17,28 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.service.ImportExtractService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import nl.ordina.bag.etl.service.ExtractService;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportExtract
 {
+	public static Log logger = LogFactory.getLog(ImportExtract.class);
+
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length == 1)
 		{
-			System.out.println("ImportExtract started");
+			logger.info("ImportExtract started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/extract.xml");
-			ImportExtractService importExtractService = (ImportExtractService)serviceLocator.get("importBAGExtractJob");
-			importExtractService.execute(new File(args[0]));
-			System.out.println("ImportExtract finished");
+			ExtractService extractService = (ExtractService)serviceLocator.get("extractService");
+			String filename = args[0].trim(); 
+			logger.info("Processing file " + filename + " started");
+			extractService.importExtract(new File(filename));
+			logger.info("Processing file " + filename + " finished");
+			logger.info("ImportExtract finished");
 		}
 		else
 			System.out.println("Usage: nl.ordina.bag.etl.ImportExtract <filename>");

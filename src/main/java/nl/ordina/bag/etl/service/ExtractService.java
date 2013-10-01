@@ -18,12 +18,14 @@ package nl.ordina.bag.etl.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import javax.xml.bind.JAXBException;
@@ -56,7 +58,7 @@ import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class ImportExtractService
+public class ExtractService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGMutatiesDAO bagMutatiesDAO;
@@ -65,38 +67,24 @@ public class ImportExtractService
 	protected BAGExtractLeveringValidator bagExtractLeveringValidator;
 	protected long skipObjects;
 
-	public void execute(File extractFile)
+	public void importExtract(File extractFile) throws ZipException, IOException, ParseException
 	{
-		try
+		ZipFile zipFile = new ZipFile(extractFile);
+		BAGExtractLevering levering = processFile(zipFile,"Leveringsdocument-BAG-Extract.xml");
+		if (levering == null)
 		{
-			logger.info("Import Extract Job started");
-			logger.info("Processing file " + extractFile.getName() + " started");
-			ZipFile zipFile = new ZipFile(extractFile);
-			BAGExtractLevering levering = processFile(zipFile,"Leveringsdocument-BAG-Extract.xml");
-			if (levering == null)
-			{
-				logger.warn("Leveringsdocument-BAG-Mutaties.xml not found!");
-				return;
-			}
-			if (bagExtractLeveringValidator != null)
-				bagExtractLeveringValidator.validate(levering);
-			processBAGExtractFile(levering,zipFile);
+			logger.warn("Leveringsdocument-BAG-Mutaties.xml not found!");
+			return;
+		}
+		if (bagExtractLeveringValidator != null)
+			bagExtractLeveringValidator.validate(levering);
+		processBAGExtractFile(levering,zipFile);
 
-			Date date = new SimpleDateFormat(Constants.BAG_DATE_FORMAT).parse(levering.getAntwoord().getVraag().getLVCExtract().getStandTechnischeDatum());
-			long id = bagMutatiesDAO.insertMutatiesFile(new Date(0),date,new byte[]{});
-			bagMutatiesDAO.setMutatiesFileStatus(id,ProcessingStatus.PROCESSED);
+		Date date = new SimpleDateFormat(Constants.BAG_DATE_FORMAT).parse(levering.getAntwoord().getVraag().getLVCExtract().getStandTechnischeDatum());
+		long id = bagMutatiesDAO.insertMutatiesFile(new Date(0),date,new byte[]{});
+		bagMutatiesDAO.setMutatiesFileStatus(id,ProcessingStatus.PROCESSED);
 
-			zipFile.close();
-		}
-		catch (Exception e)
-		{
-			logger.error("",e);
-		}
-		finally
-		{
-			logger.info("Processing file " + extractFile.getName() + " finished");
-			logger.info("Import Extract Job ended");
-		}
+		zipFile.close();
 	}
 
 	protected BAGExtractLevering processFile(ZipFile zipFile, final String filename) throws ProcessorException
@@ -325,11 +313,11 @@ public class ImportExtractService
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
-		ImportExtractService job = new ImportExtractService();
+		ExtractService job = new ExtractService();
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 		job.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXEE02","NEDERLAND","LEVENSCYCLUS","XML","EENMALIG_EXTRACT","02"));
-		job.execute(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
+		job.importExtract(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
 		System.exit(0);
 	}
 }

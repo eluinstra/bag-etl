@@ -23,16 +23,20 @@ import nl.ordina.bag.etl.processor.MutatiesFileProcessor;
 import nl.ordina.bag.etl.processor.MutatiesProcessor;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 public class ImportMutatiesDirect
 {
+	public static Log logger = LogFactory.getLog(ImportMutatiesDirect.class);
+
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length == 1)
 		{
-			System.out.println("ImportMutatiesDirect started");
+			logger.info("ImportMutatiesDirect started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
 			BAGMutatiesDAO bagMutatiesDAO = (BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO");
 			final MutatiesFileProcessor mutatiesFileProcessor = (MutatiesFileProcessor)serviceLocator.get("mutatiesFileProcessor");
@@ -47,23 +51,23 @@ public class ImportMutatiesDirect
 						{
 							try
 							{
-								System.out.println("Processing Mutaties File " + filename + " started.");
+								logger.info("Processing Mutaties File " + filename + " started.");
 								mutatiesFileProcessor.execute(new FileInputStream(filename.trim()));
 								mutatiesProcessor.execute();
 							}
 							catch (FileNotFoundException e)
 							{
-								throw new RuntimeException(e);
+								throw new ProcessingException(e);
 							}
 							finally
 							{
-								System.out.println("Processing Mutaties File " + filename + " ended.");
+								logger.info("Processing Mutaties File " + filename + " ended.");
 							}
 						}
 					}
 				);
 			}
-			System.out.println("ImportMutatiesDirect finished");
+			logger.info("ImportMutatiesDirect finished");
 		}
 		else
 			System.out.println("Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename>[,<filename>]");

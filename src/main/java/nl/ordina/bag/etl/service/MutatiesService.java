@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-public class ImportMutatiesService
+public class MutatiesService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGMutatiesDAO bagMutatiesDAO;
@@ -42,48 +42,36 @@ public class ImportMutatiesService
 	protected MutatiesFileProcessor mutatiesFileProcessor;
 	protected MutatiesProcessor mutatiesProcessor;
 
-	public void execute()
+	public void importMutaties()
 	{
-		try
+		while (true)
 		{
-			logger.info("Import Mutaties Job started.");
-			while (true)
+			final MutatiesFile mutatiesFile = bagMutatiesDAO.getNexMutatiesFile();
+			if (mutatiesFile != null)
 			{
-				final MutatiesFile mutatiesFile = bagMutatiesDAO.getNexMutatiesFile();
-				if (mutatiesFile != null)
-				{
-					bagMutatiesDAO.doInTransaction(
-						new TransactionCallbackWithoutResult()
+				bagMutatiesDAO.doInTransaction(
+					new TransactionCallbackWithoutResult()
+					{
+						@Override
+						protected void doInTransactionWithoutResult(TransactionStatus status)
 						{
-							@Override
-							protected void doInTransactionWithoutResult(TransactionStatus status)
+							try
 							{
-								try
-								{
-									logger.info("Processing Mutaties File " + new SimpleDateFormat(Constants.DATE_FORMAT).format(mutatiesFile.getDateFrom()) + " started.");
-									mutatiesFileProcessor.execute(new ByteArrayInputStream(mutatiesFile.getContent()));
-									bagMutatiesDAO.setMutatiesFileStatus(mutatiesFile.getId(),ProcessingStatus.PROCESSED);
-									mutatiesProcessor.execute();
-								}
-								finally
-								{
-									logger.info("Processing Mutaties File " + new SimpleDateFormat(Constants.DATE_FORMAT).format(mutatiesFile.getDateFrom()) + " ended.");
-								}
+								logger.info("Processing Mutaties File " + new SimpleDateFormat(Constants.DATE_FORMAT).format(mutatiesFile.getDateFrom()) + " started.");
+								mutatiesFileProcessor.execute(new ByteArrayInputStream(mutatiesFile.getContent()));
+								bagMutatiesDAO.setMutatiesFileStatus(mutatiesFile.getId(),ProcessingStatus.PROCESSED);
+								mutatiesProcessor.execute();
+							}
+							finally
+							{
+								logger.info("Processing Mutaties File " + new SimpleDateFormat(Constants.DATE_FORMAT).format(mutatiesFile.getDateFrom()) + " ended.");
 							}
 						}
-					);
-				}
-				else
-					break;
+					}
+				);
 			}
-		}
-		catch (Exception e)
-		{
-			logger.error("",e);
-		}
-		finally
-		{
-			logger.info("Import Mutaties Job ended.");
+			else
+				break;
 		}
 	}
 
@@ -111,7 +99,7 @@ public class ImportMutatiesService
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
 		
-		ImportMutatiesService importMutaties = new ImportMutatiesService();
+		MutatiesService importMutaties = new MutatiesService();
 		importMutaties.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
 		importMutaties.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		
@@ -125,7 +113,7 @@ public class ImportMutatiesService
 		mutatiesProcessor.setMutationListener(new DefaultMutationListener());
 		importMutaties.setMutatiesProcessor(mutatiesProcessor);
 
-		importMutaties.execute();
+		importMutaties.importMutaties();
 		System.exit(0);
 	}
 }

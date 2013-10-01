@@ -17,7 +17,7 @@
 		<property name="productversie" value="${bagLeveringInfo.productversie}"/>
 	</bean>
 
-	<bean id="importMutatiesFileJob" class="nl.ordina.bag.etl.service.ImportMutatiesFileService">
+	<bean id="mutatiesFileService" class="nl.ordina.bag.etl.service.MutatiesFileService">
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagExtractLeveringValidator" ref="bagMutatieLeveringValidator"/>
 	</bean>
@@ -35,7 +35,7 @@
 		<property name="mutationListener" ref="mutationListener"/>
 	</bean>
 
-	<bean id="importMutatiesJob" class="nl.ordina.bag.etl.service.ImportMutatiesService">
+	<bean id="mutatiesService" class="nl.ordina.bag.etl.service.MutatiesService">
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagDAO" ref="bagDAO"/>
 		<property name="mutatiesFileProcessor" ref="mutatiesFileProcessor"/>

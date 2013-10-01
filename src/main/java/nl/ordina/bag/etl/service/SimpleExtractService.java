@@ -41,31 +41,14 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SimpleImportExtractService
+public class SimpleExtractService
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGDAO bagDAO;
 	private BAGObjectFactory bagObjectFactory;
 	protected long skipObjects;
 
-	public void execute(InputStream extractFile)
-	{
-		try
-		{
-			logger.info("Import Extract Job started");
-			processBAGExtractFile(extractFile);
-		}
-		catch (Exception e)
-		{
-			logger.error("",e);
-		}
-		finally
-		{
-			logger.info("Import Extract Job ended");
-		}
-	}
-
-	protected void processBAGExtractFile(InputStream stream) throws FileNotFoundException, IOException
+	public void importMutatiesFile(InputStream extractFile) throws FileNotFoundException, IOException
 	{
 		ZipStreamReader zipStreamReader = new ZipStreamReader()
 		{
@@ -94,7 +77,7 @@ public class SimpleImportExtractService
 					logger.info("Skipping file " + filename);
 			}
 		};
-		zipStreamReader.read(stream);
+		zipStreamReader.read(extractFile);
 	}
 	
 	protected void ProcessXML(InputStream stream)
@@ -244,7 +227,7 @@ public class SimpleImportExtractService
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
-		SimpleImportExtractService job = new SimpleImportExtractService();
+		SimpleExtractService job = new SimpleExtractService();
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 
@@ -252,7 +235,7 @@ public class SimpleImportExtractService
 		//for (String filename : filenames)
 			//job.execute(new FileInputStream("i:/BAGExtract/" + filename));
 
-		job.execute(new FileInputStream("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
+		job.importMutatiesFile(new FileInputStream("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
 
 		System.exit(0);
 	}

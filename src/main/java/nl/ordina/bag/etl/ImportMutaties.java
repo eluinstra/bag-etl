@@ -17,23 +17,42 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.service.ImportMutatiesFileService;
-import nl.ordina.bag.etl.service.ImportMutatiesService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import nl.ordina.bag.etl.service.MutatiesFileService;
+import nl.ordina.bag.etl.service.MutatiesService;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportMutaties
 {
+	public static Log logger = LogFactory.getLog(ImportMutaties.class);
+
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length == 1)
 		{
-			System.out.println("ImportMutaties started");
+			logger.info("ImportMutaties started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
-			ImportMutatiesFileService importMutatiesFileService = (ImportMutatiesFileService)serviceLocator.get("importMutatiesFileJob");
-			ImportMutatiesService importMutatiesService = (ImportMutatiesService)serviceLocator.get("importMutatiesJob");
+			MutatiesFileService mutatiesFileService = (MutatiesFileService)serviceLocator.get("mutatiesFileService");
+			MutatiesService mutatiesService = (MutatiesService)serviceLocator.get("mutatiesService");
+			logger.info("Import Mutaties File started.");
 			for (String filename : args[0].split(","))
-				importMutatiesFileService.execute(new File(filename.trim()));
-			importMutatiesService.execute();
+				try
+				{
+					filename = filename.trim();
+					logger.info("Processing file " + filename + " started");
+					mutatiesFileService.importMutatiesFile(new File(filename));
+					logger.info("Processing file " + filename + " finished");
+				}
+				catch (ProcessingException | ValidationException e)
+				{
+					logger.error(e);
+				}
+			logger.info("Import Mutaties File ended.");
+			logger.info("Import Mutaties started.");
+			mutatiesService.importMutaties();
+			logger.info("Import Mutaties ended.");
 			System.out.println("ImportMutaties finished");
 		}
 		else
