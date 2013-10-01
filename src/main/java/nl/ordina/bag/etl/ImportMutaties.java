@@ -30,14 +30,14 @@ public class ImportMutaties
 
 	public static void main(String[] args) throws Exception
 	{
-		if (args.length == 1)
+		if (args.length > 0)
 		{
 			logger.info("ImportMutaties started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
 			MutatiesFileService mutatiesFileService = (MutatiesFileService)serviceLocator.get("mutatiesFileService");
 			MutatiesService mutatiesService = (MutatiesService)serviceLocator.get("mutatiesService");
 			logger.info("Import Mutaties File started.");
-			for (String filename : args[0].split(","))
+			for (String filename : args)
 				try
 				{
 					filename = filename.trim();
@@ -56,7 +56,7 @@ public class ImportMutaties
 			logger.info("ImportMutaties finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.ImportMutaties <filename>[,<filename>]");
+			System.out.println("Usage: nl.ordina.bag.etl.ImportMutaties <filename> [<filename>]");
 		System.exit(0);
 	}
 }

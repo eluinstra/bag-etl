@@ -64,7 +64,7 @@ Description: Takes BAGExtractFile as argument. Parses, validates and imports BAG
 ======================
 = Import BAG Mutaties
 ======================
-Usage: nl.ordina.bag.etl.ImportMutaties <filename>[,<filename>]
+Usage: nl.ordina.bag.etl.ImportMutaties <filename> [<filename>]
 Description: Takes BAGMutatiesFile(s) as argument. Parses, validates and imports BAGMutatiesFiles into table bag_mutaties_file. Then while available:
 	- takes next BAGMutatiesFile from table bag_mutaties_file with status = 0
 	- imports BAGMutatiesFile into table bag_mutatie
@@ -75,12 +75,12 @@ Description: Takes BAGMutatiesFile(s) as argument. Parses, validates and imports
 > mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutaties" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"
 > mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutaties" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
 
-> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutaties" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip,i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip,i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip,i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
+> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutaties" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
 
 =============================
 = Import BAG Mutaties Direct
 =============================
-Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename>[,<filename>]
+Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename> [<filename>]
 Description: Takes BAGMutatiesFile(s) as argument. Parses and imports each BAGMutatiesFile into table bag_mutatie and export BAGMutaties from table bag_mutatie to bag tables.
 
 > mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutatiesDirect" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"
@@ -88,9 +88,12 @@ Description: Takes BAGMutatiesFile(s) as argument. Parses and imports each BAGMu
 > mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutatiesDirect" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"
 > mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutatiesDirect" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
 
-> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutatiesDirect" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip,i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip,i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip,i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
+> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportMutatiesDirect" -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
 
 ==================
 = Format XML File
 ==================
+Usage: nl.ordina.bag.etl.XMLFormatter <filename>
+Description: writes xml file in readable format to new file
+
 > mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.XMLFormatter" -Dexec.args="file.xml"

@@ -34,14 +34,14 @@ public class ImportMutatiesDirect
 
 	public static void main(String[] args) throws Exception
 	{
-		if (args.length == 1)
+		if (args.length > 0)
 		{
 			logger.info("ImportMutatiesDirect started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
 			BAGMutatiesDAO bagMutatiesDAO = (BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO");
 			final MutatiesFileProcessor mutatiesFileProcessor = (MutatiesFileProcessor)serviceLocator.get("mutatiesFileProcessor");
 			final MutatiesProcessor mutatiesProcessor = (MutatiesProcessor)serviceLocator.get("mutatiesProcessor");
-			for (final String filename : args[0].split(","))
+			for (final String filename : args)
 			{
 				bagMutatiesDAO.doInTransaction(
 					new TransactionCallbackWithoutResult()
@@ -70,7 +70,7 @@ public class ImportMutatiesDirect
 			logger.info("ImportMutatiesDirect finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename>[,<filename>]");
+			System.out.println("Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename> [<filename>]");
 		System.exit(0);
 	}
 }
