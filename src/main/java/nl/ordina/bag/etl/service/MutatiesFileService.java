@@ -20,7 +20,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
@@ -29,10 +28,9 @@ import javax.xml.bind.JAXBException;
 import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtractLevering;
 import nl.ordina.bag.etl.Constants;
 import nl.ordina.bag.etl.ProcessingException;
-import nl.ordina.bag.etl.ValidationException;
+import nl.ordina.bag.etl.Utils;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.util.ServiceLocator;
-import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -47,11 +45,8 @@ public class MutatiesFileService
 	public void importMutatiesFile(File mutatiesFile) throws ZipException, IOException, JAXBException
 	{
 		ZipFile zipFile = new ZipFile(mutatiesFile);
-		BAGExtractLevering levering = processFile(zipFile,"Leveringsdocument-BAG-Mutaties.xml");
-		if (levering == null)
-			throw new ValidationException("Leveringsdocument-BAG-Mutaties.xml not found!");
-		if (bagExtractLeveringValidator != null)
-			bagExtractLeveringValidator.validate(levering);
+		BAGExtractLevering levering = Utils.readBagExtractLevering(zipFile);
+		bagExtractLeveringValidator.validate(levering);
 		Date dateFrom = levering.getAntwoord().getVraag().getMUTExtract().getMutatieperiode().getMutatiedatumVanaf().toGregorianCalendar().getTime();
 		Date dateTo = levering.getAntwoord().getVraag().getMUTExtract().getMutatieperiode().getMutatiedatumTot().toGregorianCalendar().getTime();
 		if (bagMutatiesDAO.existsMutatiesFile(dateFrom))
@@ -62,12 +57,6 @@ public class MutatiesFileService
 		FileInputStream stream = new FileInputStream(mutatiesFile);
 		bagMutatiesDAO.insertMutatiesFile(dateFrom,dateTo,IOUtils.toByteArray(stream));
 		stream.close();
-	}
-
-	private BAGExtractLevering processFile(ZipFile zipFile, String filename) throws IOException, JAXBException
-	{
-		ZipEntry entry = zipFile.getEntry(filename);
-		return entry == null ? null : XMLMessageBuilder.getInstance(BAGExtractLevering.class).handle(zipFile.getInputStream(entry));
 	}
 
 	public void setBagMutatiesDAO(BAGMutatiesDAO bagMutatiesDAO)
