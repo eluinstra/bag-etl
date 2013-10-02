@@ -134,16 +134,22 @@
 				<artifactId>license-maven-plugin</artifactId>
 				<version>1.5</version>
 				<configuration>
-					<licenseName>my_license</licenseName>
-					<licenseResolver>${project.basedir}/resources/license</licenseResolver>
+					<licenseName>license</licenseName>
+					<licenseResolver>${project.baseUri}resources</licenseResolver>
+					<includes>
+						<include>src/main/java/**/*.java</include>
+						<include>src/main/resources/**/*</include>
+					</includes>
+					<excludes>
+						<exclude>src/main/resources/log4j.*</exclude>
+						<exclude>src/main/resources/nl/ordina/bag/etl/xsd/**/*</exclude>
+					</excludes>
 				</configuration>
 				<executions>
 					<execution>
-						<id>license</id>
 						<goals>
 							<goal>update-file-header</goal>
 						</goals>
-						<phase>process-sources</phase>
 					</execution>
 				</executions>
 			</plugin-->
@@ -161,8 +167,8 @@
 						<include>src/main/resources/**/*.*</include>
 					</includes>
 					<excludes>
-						<include>src/main/resources/log4j.*</include>
-						<include>src/main/resources/nl/ordina/bag/etl/xsd/**/*.*</include>
+						<exclude>src/main/resources/log4j.*</exclude>
+						<exclude>src/main/resources/nl/ordina/bag/etl/xsd/**/*.*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
