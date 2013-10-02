@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.ordina.bag.etl.service;
+package nl.ordina.bag.etl.validation;
 
 import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtractLevering;
 import nl.ordina.bag.etl.Utils.FileType;
@@ -46,7 +46,7 @@ public class BAGExtractLeveringValidator
 		this.productversie = productversie;
 	}
 
-	void validate(FileType fileType, BAGExtractLevering bagExtractLevering)
+	public void validate(FileType fileType, BAGExtractLevering bagExtractLevering)
 	{
 		if (bagExtractLevering == null)
 			throw new ValidationException(fileType.filename.concat(" not found!"));

@@ -32,6 +32,7 @@ import nl.ordina.bag.etl.Utils;
 import nl.ordina.bag.etl.Utils.FileType;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.validation.BAGExtractLeveringValidator;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;

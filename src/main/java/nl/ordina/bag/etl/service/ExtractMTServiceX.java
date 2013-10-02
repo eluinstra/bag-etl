@@ -39,6 +39,7 @@ import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.model.BAGObjectFactory;
 import nl.ordina.bag.etl.util.ServiceLocator;
 import nl.ordina.bag.etl.util.ZipStreamReader;
+import nl.ordina.bag.etl.validation.BAGExtractLeveringValidator;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
