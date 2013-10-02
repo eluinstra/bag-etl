@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.ordina.bag.etl.xml;
+package nl.ordina.bag.etl.validation;
 
 import java.io.IOException;
 import java.io.InputStream;

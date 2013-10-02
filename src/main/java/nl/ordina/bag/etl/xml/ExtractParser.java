@@ -37,6 +37,7 @@ import nl.kadaster.schemas.imbag.lvc.v20090901.Verblijfsobject;
 import nl.kadaster.schemas.imbag.lvc.v20090901.Woonplaats;
 import nl.ordina.bag.etl.util.XMLStreamReaderUtils;
 import nl.ordina.bag.etl.util.XMLStreamReaderUtils.Tag;
+import nl.ordina.bag.etl.validation.SchemaValidator;
 
 public abstract class ExtractParser implements ExtractHandler
 {

@@ -32,6 +32,7 @@ import nl.kadaster.schemas.bag_verstrekkingen.extract_deelbestand_mutaties_lvc.v
 import nl.kadaster.schemas.bag_verstrekkingen.extract_producten_lvc.v20090901.MutatieProduct;
 import nl.ordina.bag.etl.util.XMLStreamReaderUtils;
 import nl.ordina.bag.etl.util.XMLStreamReaderUtils.Tag;
+import nl.ordina.bag.etl.validation.SchemaValidator;
 
 public abstract class MutatiesParser implements MutatiesHandler
 {
