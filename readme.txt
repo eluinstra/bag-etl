@@ -15,13 +15,15 @@ Supported databases:
 = BAG Configuration
 ====================
 example override properties file: bag-etl-xxx-src.zip/resources/bag.properties
+or see below
 
 edit and copy override properties file to:
-${user.home}/.bag/bag.properties
-or
-./bag.properties
+<properties.dir>/bag.properties
+where <properties.dir> is the value of the optional VM argument (default: -Dproperties.dir=)
+or default:
+<execute_dir>/bag.properties
 
-override properties file:
+override properties file bag.properties:
 #-------------------------------------------------------------------------------
 # Override properties
 #-------------------------------------------------------------------------------
@@ -59,7 +61,9 @@ bag.pool.preferredTestQuery=select 1 from dual
 Usage: nl.ordina.bag.etl.ImportExtract <filename>
 Description: Takes BAGExtractFile as argument. Parses, validates and imports BAGExtractFile into bag tables and writes initial record in table bag_mutaties_file with date_from = 01-01-1970 and status = 2.
 
-> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportExtract" -Dexec.args="i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip" -Dexec.classpathScope=runtime
+> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportExtract" -Dexec.args="i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"
+
+> mvn exec:java -Dexec.mainClass="nl.ordina.bag.etl.ImportExtract" -Dexec.args="i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip -Dproperties.dir=c:/"
 
 ======================
 = Import BAG Mutaties
