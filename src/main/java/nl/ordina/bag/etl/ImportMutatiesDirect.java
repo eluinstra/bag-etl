@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.processor.MutatiesFileProcessor;
 import nl.ordina.bag.etl.processor.MutatiesProcessor;
+import nl.ordina.bag.etl.processor.ProcessingException;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 import org.apache.commons.logging.Log;

@@ -15,7 +15,6 @@
  */
 package nl.ordina.bag.etl.processor;
 
-import nl.ordina.bag.etl.ProcessingException;
 import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.model.Ligplaats;

@@ -19,7 +19,6 @@ import java.util.List;
 
 import nl.kadaster.schemas.bag_verstrekkingen.extract_producten_lvc.v20090901.MutatieProduct;
 import nl.ordina.bag.etl.Constants.BAGObjectType;
-import nl.ordina.bag.etl.ProcessingException;
 import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.model.BAGObjectFactory;

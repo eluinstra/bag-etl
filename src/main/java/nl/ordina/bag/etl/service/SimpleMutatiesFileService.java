@@ -22,9 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import nl.ordina.bag.etl.Constants;
-import nl.ordina.bag.etl.ProcessingException;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.dao.DAOException;
+import nl.ordina.bag.etl.processor.ProcessingException;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 import org.apache.commons.io.IOUtils;

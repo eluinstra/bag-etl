@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.ordina.bag.etl;
+package nl.ordina.bag.etl.processor;
 
-public class ProcessorException extends RuntimeException //Exception
+public class ProcessingException extends ProcessorException
 {
 	private static final long serialVersionUID = 1L;
 
-	public ProcessorException()
+	public ProcessingException()
 	{
 		super();
 	}
 
-	public ProcessorException(String message)
+	public ProcessingException(String message)
 	{
 		super(message);
 	}
 
-	public ProcessorException(String message, Throwable cause)
+	public ProcessingException(String message, Throwable cause)
 	{
 		super(message,cause);
 	}
 
-	public ProcessorException(Throwable cause)
+	public ProcessingException(Throwable cause)
 	{
 		super(cause);
 	}
