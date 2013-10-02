@@ -25,8 +25,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import nl.ordina.bag.etl.ValidationException;
-import nl.ordina.bag.etl.ValidatorException;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
