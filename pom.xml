@@ -17,15 +17,22 @@
 		<developer>
 			<id>eluinstra</id>
 			<name>Edwin Luinstra</name>
-			<email>edwin.luinstra@clockwork.nl</email>
+			<email>edwin.luinstra@ordina.nl</email>
+			<organization>Ordina</organization>
+			<organizationUrl>http://www.ordina.nl</organizationUrl>
+			<roles>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>1</timezone>
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:ssh://</connection>
+		<connection>scm:git:ssh://git@github.com:eluinstra/bag-etl.git</connection>
 	</scm>
 	<organization>
-		<name>Clockwork</name>
-		<url>www.clockwork.nl</url>
+		<name>Ordina</name>
+		<url>www.ordina.nl</url>
 	</organization>
 	<properties>
 		<jdk.version>1.7</jdk.version>
