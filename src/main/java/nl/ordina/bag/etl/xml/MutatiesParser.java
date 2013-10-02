@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -59,7 +60,7 @@ public abstract class MutatiesParser implements MutatiesHandler
 			XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(is);
 			parse(reader);
 		}
-		catch (Exception e)
+		catch (XMLStreamException | FactoryConfigurationError | JAXBException e)
 		{
 			throw new ParseException(e);
 		}

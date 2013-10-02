@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
@@ -64,7 +65,7 @@ public abstract class ExtractParser implements ExtractHandler
 			XMLStreamReader reader = XMLStreamReaderUtils.getXMLStreamReader(is);
 			parse(reader);
 		}
-		catch (Exception e)
+		catch (XMLStreamException | FactoryConfigurationError | JAXBException e)
 		{
 			throw new ParseException(e);
 		}
