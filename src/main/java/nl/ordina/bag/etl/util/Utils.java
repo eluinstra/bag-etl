@@ -1,11 +1,15 @@
 package nl.ordina.bag.etl.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
 
 import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtractLevering;
@@ -25,6 +29,24 @@ public class Utils
 		}
 	}
 
+	public static FileType getFileType(File file) throws ZipException, IOException, JAXBException
+	{
+		ZipFile zipFile = new ZipFile(file);
+		try
+		{
+			if (zipFile.getEntry(FileType.EXTRACT.filename) != null)
+				return FileType.EXTRACT;
+			if (zipFile.getEntry(FileType.MUTATIES.filename) != null)
+				return FileType.MUTATIES;
+			else
+				return null;
+		}
+		finally
+		{
+			zipFile.close();
+		}
+	}
+	
 	public static BAGExtractLevering readBagExtractLevering(ZipFile zipFile, FileType fileType) throws IOException, JAXBException
 	{
 		return read(XMLMessageBuilder.getInstance(BAGExtractLevering.class),fileType.filename,zipFile);
@@ -56,4 +78,8 @@ public class Utils
 		}
 	}
 
+	public static void testDbConnection(DataSource dataSource) throws SQLException
+	{
+		dataSource.getConnection();
+	}
 }
