@@ -68,6 +68,8 @@ public class Import
 				logger.info("Import Mutaties ended.");
 				logger.info("ImportMutaties finished");
 			}
+			else
+				logger.warn(file.getName() + " is not a valid BAG file!");
 			logger.info("Import finished");
 		}
 		else
