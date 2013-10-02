@@ -16,7 +16,7 @@
 package nl.ordina.bag.etl.validation;
 
 import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtractLevering;
-import nl.ordina.bag.etl.Utils.FileType;
+import nl.ordina.bag.etl.util.Utils.FileType;
 
 import org.apache.commons.lang.StringUtils;
 

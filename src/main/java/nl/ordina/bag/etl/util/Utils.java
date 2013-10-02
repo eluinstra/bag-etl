@@ -1,4 +1,4 @@
-package nl.ordina.bag.etl;
+package nl.ordina.bag.etl.util;
 
 import java.io.IOException;
 import java.io.InputStream;
