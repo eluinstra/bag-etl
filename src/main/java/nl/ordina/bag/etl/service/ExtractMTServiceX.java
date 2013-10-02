@@ -120,7 +120,6 @@ public class ExtractMTServiceX extends ExtractMTService
 	
 	protected void processXML(InputStream stream)
 	{
-		//ExtractParserX reader = new ExtractParserX(exceptionListener)
 		ExtractParser reader = new ExtractParser()
 		{
 			@Override
