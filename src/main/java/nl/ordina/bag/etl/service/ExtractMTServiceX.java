@@ -105,7 +105,14 @@ public class ExtractMTServiceX extends ExtractMTService
 			}
 			catch (Exception e)
 			{
-				executorService.shutdownNow();
+				try
+				{
+					executorService.shutdownNow();
+					executorService.awaitTermination(Long.MAX_VALUE,TimeUnit.DAYS);
+				}
+				catch (InterruptedException ignore)
+				{
+				}
 				throw new ProcessingException(e);
 			}
 		}
