@@ -8,7 +8,7 @@
 		<property name="locations"> 
 			<list>
 				<value>classpath:nl/ordina/bag/etl/default.properties</value>   
-				<value>file:${properties.dir}bag.properties</value>
+				<value>file:bag.properties</value>
 			</list>
 		</property>
 	</bean>

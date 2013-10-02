@@ -18,9 +18,6 @@ example override properties file: bag-etl-xxx-src.zip/resources/bag.properties
 or see below
 
 edit and copy override properties file to:
-<properties.dir>/bag.properties
-where <properties.dir> is the value of the optional VM argument (default: -Dproperties.dir=)
-or default:
 <execute_dir>/bag.properties
 
 override properties file bag.properties:
