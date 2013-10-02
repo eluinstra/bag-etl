@@ -38,7 +38,7 @@ public class ImportMutatiesDirect
 		if (args.length > 0)
 		{
 			logger.info("ImportMutatiesDirect started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
+			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutaties.xml");
 			BAGMutatiesDAO bagMutatiesDAO = (BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO");
 			final MutatiesFileProcessor mutatiesFileProcessor = (MutatiesFileProcessor)serviceLocator.get("mutatiesFileProcessor");
 			final MutatiesProcessor mutatiesProcessor = (MutatiesProcessor)serviceLocator.get("mutatiesProcessor");

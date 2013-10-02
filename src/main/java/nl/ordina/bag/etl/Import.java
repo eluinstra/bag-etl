@@ -38,7 +38,7 @@ public class Import
 		if (args.length > 0)
 		{
 			logger.info("Import started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/extract.xml","nl/ordina/bag/etl/mutatie.xml");
+			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/extract.xml","nl/ordina/bag/etl/mutaties.xml");
 			File file = new File(args[0].trim());
 			if (args.length == 2)
 				Log4jUtils.setLogLevel("nl.ordina.bag.etl",Level.toLevel(args[1].trim()));

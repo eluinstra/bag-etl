@@ -35,7 +35,7 @@ public class ImportMutaties
 		if (args.length > 0)
 		{
 			logger.info("ImportMutaties started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutatie.xml");
+			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/mutaties.xml");
 			MutatiesFileService mutatiesFileService = (MutatiesFileService)serviceLocator.get("mutatiesFileService");
 			MutatiesService mutatiesService = (MutatiesService)serviceLocator.get("mutatiesService");
 			logger.info("Import Mutaties File started.");
