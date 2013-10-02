@@ -68,7 +68,7 @@ Description: Takes BAGFile as argument. Depending on the file type it executes B
 = Import BAG Extract
 =====================
 Usage: nl.ordina.bag.etl.ImportExtract <filename>
-Description: Takes BAGExtractFile as argument. Parses, validates and imports BAGExtractFile into bag tables and writes initial record in table bag_mutaties_file with date_from = 01-01-1970 and status = 2.
+Description: Takes BAGExtractFile as argument. Parses, validates and imports BAGExtractFile into bag tables and writes initial record in table bag_mutaties_file with date_from = 01-01-1970 and status = 1.
 
 > java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportExtract i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip
 

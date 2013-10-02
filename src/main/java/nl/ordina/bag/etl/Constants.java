@@ -23,7 +23,7 @@ public class Constants
 
 	public enum ProcessingStatus
 	{
-		UNPROCESSED, PROCESSING, PROCESSED;
+		UNPROCESSED, PROCESSED;
 	}
 
 	public enum BAGObjectType
@@ -65,16 +65,6 @@ public class Constants
 		{
 			return name;
 		}
-	}
-
-	public enum BAGMutatieObjectType
-	{
-		NIEUW, ORIGINEEL, WIJZIGING;
-	}
-
-	public enum BAGMutatieType
-	{
-		NIEUW, ORIGINEEL, WIJZIGING;
 	}
 
 }
