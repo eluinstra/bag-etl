@@ -51,7 +51,7 @@ public class SimpleMutatiesFileService
 	
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/dao/datasource.xml","nl/ordina/bag/etl/dao/oracle.xml");
+		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		SimpleMutatiesFileService mutatiesFileService = new SimpleMutatiesFileService();
 		mutatiesFileService.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
 		mutatiesFileService.importMutatiesFile(new SimpleDateFormat("ddMMyyyy").parse("01042011"),new SimpleDateFormat("ddMMyyyy").parse("02042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
