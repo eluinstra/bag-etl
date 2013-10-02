@@ -15,9 +15,9 @@
 	</issueManagement>	
 	<developers>
 		<developer>
-			<id>e.luinstra</id>
+			<id>eluinstra</id>
 			<name>Edwin Luinstra</name>
-			<email>e.luinstra@clockwork.nl</email>
+			<email>edwin.luinstra@clockwork.nl</email>
 		</developer>
 	</developers>
 	<scm>
