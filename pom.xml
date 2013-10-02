@@ -8,10 +8,10 @@
 	<name>BAG ETL</name>
 	<version>1.0.0-SNAPSHOT</version>
 	<description></description>
-	<url>https://</url>
+	<url>https://github.com/eluinstra/bag-etl</url>
 	<issueManagement>
 		<system>Tickets</system>
-		<url>https://</url>
+		<url>https://github.com/eluinstra/bag-etl/issues</url>
 	</issueManagement>	
 	<developers>
 		<developer>
