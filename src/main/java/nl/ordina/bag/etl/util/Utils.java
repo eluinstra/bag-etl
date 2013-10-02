@@ -27,6 +27,8 @@ import java.util.zip.ZipInputStream;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtractLevering;
 import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 
@@ -93,8 +95,15 @@ public class Utils
 		}
 	}
 
-	public static void testDbConnection(DataSource dataSource) throws SQLException
+	public static void testDbConnection(DataSource dataSource)
 	{
-		dataSource.getConnection();
+		try
+		{
+			dataSource.getConnection();
+		}
+		catch (SQLException e)
+		{
+			throw new RuntimeException("Unable to connect to: " + ((ComboPooledDataSource)dataSource).getJdbcUrl(),e);
+		}
 	}
 }
