@@ -2,6 +2,7 @@
 = Build Project
 ================
 mvn clean package
+mvn clean compile assembly:single
 
 ===============
 = BAG Database
@@ -57,11 +58,11 @@ bag.pool.preferredTestQuery=select 1 from dual
 Usage: nl.ordina.bag.etl.Import <filename> [<loglevel>]
 Description: Takes BAGFile as argument. Depending on the file type it executes BAG Extract or Mutaties Import.
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.Import -Dexec.args="i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip debug"
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.Import -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.Import -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.Import -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.Import -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Import i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip debug
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Import i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Import i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Import i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Import i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
 =====================
 = Import BAG Extract
@@ -69,7 +70,7 @@ Description: Takes BAGFile as argument. Depending on the file type it executes B
 Usage: nl.ordina.bag.etl.ImportExtract <filename>
 Description: Takes BAGExtractFile as argument. Parses, validates and imports BAGExtractFile into bag tables and writes initial record in table bag_mutaties_file with date_from = 01-01-1970 and status = 2.
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportExtract -Dexec.args=i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportExtract i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip
 
 ======================
 = Import BAG Mutaties
@@ -80,12 +81,12 @@ Description: Takes BAGMutatiesFile(s) as argument. Parses, validates and imports
 	- imports BAGMutatiesFile into table bag_mutatie
 	- exports BAGMutaties from table bag_mutatie to bag tables
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutaties -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutaties -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutaties -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutaties -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutaties i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutaties i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutaties i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutaties i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutaties -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutaties i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
 =============================
 = Import BAG Mutaties Direct
@@ -93,12 +94,12 @@ Description: Takes BAGMutatiesFile(s) as argument. Parses, validates and imports
 Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename> [<filename>]
 Description: Takes BAGMutatiesFile(s) as argument. Parses and imports each BAGMutatiesFile into table bag_mutatie and export BAGMutaties from table bag_mutatie to bag tables.
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutatiesDirect -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutatiesDirect -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutatiesDirect -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutatiesDirect -Dexec.args=i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutatiesDirect i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutatiesDirect i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutatiesDirect i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutatiesDirect i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.ImportMutatiesDirect -Dexec.args="i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.ImportMutatiesDirect i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
 ===========================
 = Test Database Connection
@@ -106,7 +107,7 @@ Description: Takes BAGMutatiesFile(s) as argument. Parses and imports each BAGMu
 Usage: nl.ordina.bag.etl.TestDbConnection
 Description: tests database connection
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.TestDbConnection
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.TestDbConnection
 
 ==================
 = Format XML File
@@ -114,4 +115,4 @@ Description: tests database connection
 Usage: nl.ordina.bag.etl.XMLFormatter <filename>
 Description: writes xml file in readable format to new file
 
-> mvn exec:java -Dexec.mainClass=nl.ordina.bag.etl.XMLFormatter -Dexec.args=file.xml
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.XMLFormatter file.xml
