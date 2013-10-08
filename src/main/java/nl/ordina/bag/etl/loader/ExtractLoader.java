@@ -299,11 +299,11 @@ public class ExtractLoader
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		ExtractLoader job = new ExtractLoader();
-		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
-		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
-		job.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXEE02","NEDERLAND","LEVENSCYCLUS","XML","EENMALIG_EXTRACT","02"));
-		job.execute(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
+		ExtractLoader loader = new ExtractLoader();
+		loader.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		loader.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
+		loader.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXEE02","NEDERLAND","LEVENSCYCLUS","XML","EENMALIG_EXTRACT","02"));
+		loader.execute(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
 		System.exit(0);
 	}
 }

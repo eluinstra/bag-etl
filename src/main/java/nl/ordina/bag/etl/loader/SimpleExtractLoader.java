@@ -223,15 +223,15 @@ public class SimpleExtractLoader
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		SimpleExtractLoader job = new SimpleExtractLoader();
-		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
-		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
+		SimpleExtractLoader loader = new SimpleExtractLoader();
+		loader.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		loader.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 
 		//String[] filenames = new String[]{"9999WPL01042011.zip","9999OPR01042011.zip","9999NUM01042011.zip","9999PND01042011.zip","9999VBO01042011.zip","9999LIG01042011.zip","9999STA01042011.zip"};
 		//for (String filename : filenames)
-			//job.execute(new FileInputStream("i:/BAGExtract/" + filename));
+			//loader.execute(new FileInputStream("i:/BAGExtract/" + filename));
 
-		job.execute(new FileInputStream("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
+		loader.execute(new FileInputStream("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
 
 		System.exit(0);
 	}

@@ -52,12 +52,12 @@ public class SimpleMutatiesFileLoader
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		SimpleMutatiesFileLoader mutatiesFileService = new SimpleMutatiesFileLoader();
-		mutatiesFileService.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
-		mutatiesFileService.execute(new SimpleDateFormat("ddMMyyyy").parse("01042011"),new SimpleDateFormat("ddMMyyyy").parse("02042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
-		mutatiesFileService.execute(new SimpleDateFormat("ddMMyyyy").parse("02042011"),new SimpleDateFormat("ddMMyyyy").parse("03042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
-		mutatiesFileService.execute(new SimpleDateFormat("ddMMyyyy").parse("03042011"),new SimpleDateFormat("ddMMyyyy").parse("04042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));
-		mutatiesFileService.execute(new SimpleDateFormat("ddMMyyyy").parse("04042011"),new SimpleDateFormat("ddMMyyyy").parse("05042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"));
+		SimpleMutatiesFileLoader loader = new SimpleMutatiesFileLoader();
+		loader.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
+		loader.execute(new SimpleDateFormat("ddMMyyyy").parse("01042011"),new SimpleDateFormat("ddMMyyyy").parse("02042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
+		loader.execute(new SimpleDateFormat("ddMMyyyy").parse("02042011"),new SimpleDateFormat("ddMMyyyy").parse("03042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
+		loader.execute(new SimpleDateFormat("ddMMyyyy").parse("03042011"),new SimpleDateFormat("ddMMyyyy").parse("04042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));
+		loader.execute(new SimpleDateFormat("ddMMyyyy").parse("04042011"),new SimpleDateFormat("ddMMyyyy").parse("05042011"),new FileInputStream("I:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"));
 		System.exit(0);
 	}
 }
