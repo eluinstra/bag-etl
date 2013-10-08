@@ -27,7 +27,7 @@ import nl.ordina.bag.etl.processor.DefaultMutationListener;
 import nl.ordina.bag.etl.processor.MutatiesFileProcessor;
 import nl.ordina.bag.etl.processor.MutatiesProcessor;
 import nl.ordina.bag.etl.processor.SimpleMutatiesProcessor;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -97,19 +97,19 @@ public class MutatiesLoader
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		
 		MutatiesLoader importMutaties = new MutatiesLoader();
-		importMutaties.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
-		importMutaties.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		importMutaties.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
+		importMutaties.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		
 		MutatiesFileProcessor mutatiesFileProcessor = new MutatiesFileProcessor();
-		mutatiesFileProcessor.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
+		mutatiesFileProcessor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
 		importMutaties.setMutatiesFileProcessor(mutatiesFileProcessor);
 		
 		MutatiesProcessor mutatiesProcessor = new SimpleMutatiesProcessor();
-		mutatiesProcessor.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
-		mutatiesProcessor.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		mutatiesProcessor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
+		mutatiesProcessor.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		mutatiesProcessor.setMutationListener(new DefaultMutationListener());
 		importMutaties.setMutatiesProcessor(mutatiesProcessor);
 

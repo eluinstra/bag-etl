@@ -21,7 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import nl.ordina.bag.etl.loader.ExtractLoader;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 
 public class LoadExtract
 {
@@ -32,8 +32,8 @@ public class LoadExtract
 		if (args.length == 1)
 		{
 			logger.info("LoadExtract started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/extract.xml");
-			ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractLoader");
+			BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/extract.xml");
+			ExtractLoader extractLoader = (ExtractLoader)beanLocator.get("extractLoader");
 			String filename = args[0].trim(); 
 			logger.info("Processing file " + filename + " started");
 			extractLoader.execute(new File(filename));

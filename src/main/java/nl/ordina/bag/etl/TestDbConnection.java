@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.Utils;
 
 public class TestDbConnection
@@ -34,8 +34,8 @@ public class TestDbConnection
 		if (args.length == 0)
 		{
 			logger.info("TestDbConnection started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-			DataSource dataSource = (DataSource)serviceLocator.get("bagDataSource");
+			BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+			DataSource dataSource = (DataSource)beanLocator.get("bagDataSource");
 			Utils.testDbConnection(dataSource);
 			logger.info("TestDbConnection finised");
 		}

@@ -18,21 +18,21 @@ package nl.ordina.bag.etl.util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ServiceLocator
+public class BeanLocator
 {
-	private static ServiceLocator serviceLocator;
+	private static BeanLocator beanLocator;
 	private ApplicationContext context;
 
-	private ServiceLocator(String...files)
+	private BeanLocator(String...files)
 	{
 		context = new ClassPathXmlApplicationContext(files);
 	}
 
-	public static ServiceLocator getInstance(String...files)
+	public static BeanLocator getInstance(String...files)
 	{
-		if (serviceLocator == null)
-			serviceLocator = new ServiceLocator(files);
-		return serviceLocator;
+		if (beanLocator == null)
+			beanLocator = new BeanLocator(files);
+		return beanLocator;
 	}
 
 	public Object get(String id)

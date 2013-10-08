@@ -29,7 +29,7 @@ import nl.kadaster.schemas.bag_verstrekkingen.extract_levering.v20090901.BAGExtr
 import nl.ordina.bag.etl.Constants;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.processor.ProcessingException;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.Utils;
 import nl.ordina.bag.etl.util.Utils.FileType;
 import nl.ordina.bag.etl.validation.BAGExtractLeveringValidator;
@@ -73,9 +73,9 @@ public class MutatiesFileLoader
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		MutatiesFileLoader importMutatiesFile = new MutatiesFileLoader();
-		importMutatiesFile.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
+		importMutatiesFile.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
 		importMutatiesFile.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXAM02","NEDERLAND","LEVENSCYCLUS","XML","ABONNEMENT_MUTATIE","02"));
 		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
 		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));

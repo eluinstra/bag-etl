@@ -22,7 +22,7 @@ import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.processor.MutatiesFileProcessor;
 import nl.ordina.bag.etl.processor.MutatiesProcessor;
 import nl.ordina.bag.etl.processor.ProcessingException;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,10 +38,10 @@ public class LoadMutatiesDirect
 		if (args.length > 0)
 		{
 			logger.info("LoadMutatiesDirect started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
-			BAGMutatiesDAO bagMutatiesDAO = (BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO");
-			final MutatiesFileProcessor mutatiesFileProcessor = (MutatiesFileProcessor)serviceLocator.get("mutatiesFileProcessor");
-			final MutatiesProcessor mutatiesProcessor = (MutatiesProcessor)serviceLocator.get("mutatiesProcessor");
+			BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
+			BAGMutatiesDAO bagMutatiesDAO = (BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO");
+			final MutatiesFileProcessor mutatiesFileProcessor = (MutatiesFileProcessor)beanLocator.get("mutatiesFileProcessor");
+			final MutatiesProcessor mutatiesProcessor = (MutatiesProcessor)beanLocator.get("mutatiesProcessor");
 			for (final String filename : args)
 			{
 				bagMutatiesDAO.doInTransaction(

@@ -24,7 +24,7 @@ import nl.ordina.bag.etl.model.Pand;
 import nl.ordina.bag.etl.model.Standplaats;
 import nl.ordina.bag.etl.model.Verblijfsobject;
 import nl.ordina.bag.etl.model.Woonplaats;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 
 public class SimpleMutatiesProcessor extends MutatiesProcessor
 {
@@ -135,11 +135,11 @@ public class SimpleMutatiesProcessor extends MutatiesProcessor
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		SimpleMutatiesProcessor processor = new SimpleMutatiesProcessor();
 		processor.logger.info("Processor started");
-		processor.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
-		processor.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		processor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
+		processor.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		processor.execute();
 		processor.logger.info("Processor finished");
 		System.exit(0);

@@ -30,7 +30,7 @@ import nl.kadaster.schemas.imbag.lvc.v20090901.Woonplaats;
 import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.model.BAGObjectFactory;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.ZipStreamReader;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
@@ -222,9 +222,9 @@ public class SimpleExtractLoader
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		SimpleExtractLoader loader = new SimpleExtractLoader();
-		loader.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		loader.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		loader.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 
 		//String[] filenames = new String[]{"9999WPL01042011.zip","9999OPR01042011.zip","9999NUM01042011.zip","9999PND01042011.zip","9999VBO01042011.zip","9999LIG01042011.zip","9999STA01042011.zip"};

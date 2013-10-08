@@ -25,7 +25,7 @@ import nl.kadaster.schemas.bag_verstrekkingen.extract_producten_lvc.v20090901.Mu
 import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.dao.BAGMutatiesDAO;
 import nl.ordina.bag.etl.model.mutatie.BAGMutatie;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.ZipStreamReader;
 import nl.ordina.bag.etl.xml.HandlerException;
 import nl.ordina.bag.etl.xml.MutatiesParser;
@@ -121,10 +121,10 @@ public class MutatiesFileProcessor
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		MutatiesFileProcessor processor = new MutatiesFileProcessor();
 		processor.logger.info("Processor started");
-		processor.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
+		processor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
 		processor.execute(new FileInputStream("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
 		processor.execute(new FileInputStream("i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
 		processor.execute(new FileInputStream("i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));

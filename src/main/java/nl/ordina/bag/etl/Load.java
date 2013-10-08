@@ -21,7 +21,7 @@ import nl.ordina.bag.etl.loader.ExtractLoader;
 import nl.ordina.bag.etl.loader.MutatiesFileLoader;
 import nl.ordina.bag.etl.loader.MutatiesLoader;
 import nl.ordina.bag.etl.util.Log4jUtils;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.Utils;
 import nl.ordina.bag.etl.util.Utils.FileType;
 
@@ -38,7 +38,7 @@ public class Load
 		if (args.length > 0 && args.length < 3)
 		{
 			logger.info("Load started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationContext.xml");
+			BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationContext.xml");
 			File file = new File(args[0].trim());
 			if (args.length == 2)
 				Log4jUtils.setLogLevel("nl.ordina.bag.etl",Level.toLevel(args[1].trim()));
@@ -46,7 +46,7 @@ public class Load
 			if (FileType.EXTRACT.equals(fileType))
 			{
 				logger.info("LoadExtract started");
-				ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractLoader");
+				ExtractLoader extractLoader = (ExtractLoader)beanLocator.get("extractLoader");
 				logger.info("Processing file " + file.getName() + " started");
 				extractLoader.execute(file);
 				logger.info("Processing file " + file.getName() + " finished");
@@ -55,8 +55,8 @@ public class Load
 			else if (FileType.MUTATIES.equals(fileType))
 			{
 				logger.info("LoadMutaties started");
-				MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileLoader");
-				MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesLoader");
+				MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)beanLocator.get("mutatiesFileLoader");
+				MutatiesLoader mutatiesLoader = (MutatiesLoader)beanLocator.get("mutatiesLoader");
 				logger.info("Load Mutaties File started.");
 				logger.info("Processing file " + file.getName() + " started");
 				mutatiesFileLoader.execute(file);

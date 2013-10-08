@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import nl.ordina.bag.etl.loader.MutatiesFileLoader;
 import nl.ordina.bag.etl.loader.MutatiesLoader;
 import nl.ordina.bag.etl.processor.ProcessingException;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.validation.ValidationException;
 
 public class LoadMutaties
@@ -35,9 +35,9 @@ public class LoadMutaties
 		if (args.length > 0)
 		{
 			logger.info("LoadMutaties started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
-			MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileLoader");
-			MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesLoader");
+			BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
+			MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)beanLocator.get("mutatiesFileLoader");
+			MutatiesLoader mutatiesLoader = (MutatiesLoader)beanLocator.get("mutatiesLoader");
 			logger.info("Load Mutaties File started.");
 			for (String filename : args)
 				try

@@ -37,7 +37,7 @@ import nl.ordina.bag.etl.dao.BAGDAO;
 import nl.ordina.bag.etl.model.BAGObjectFactory;
 import nl.ordina.bag.etl.processor.ProcessingException;
 import nl.ordina.bag.etl.processor.ProcessorException;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.ZipStreamReader;
 import nl.ordina.bag.etl.validation.BAGExtractLeveringValidator;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
@@ -303,10 +303,10 @@ public class ExtractMTLoaderX extends ExtractMTLoader
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		ExtractMTLoaderX loader = new ExtractMTLoaderX();
 		loader.setMaxThreads(8);
-		loader.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		loader.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		loader.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 		loader.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXEE02","NEDERLAND","LEVENSCYCLUS","XML","EENMALIG_EXTRACT","02"));
 		loader.execute(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));

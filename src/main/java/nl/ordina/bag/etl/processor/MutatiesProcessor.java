@@ -30,7 +30,7 @@ import nl.ordina.bag.etl.model.Standplaats;
 import nl.ordina.bag.etl.model.Verblijfsobject;
 import nl.ordina.bag.etl.model.Woonplaats;
 import nl.ordina.bag.etl.model.mutatie.BAGMutatie;
-import nl.ordina.bag.etl.util.ServiceLocator;
+import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 
 import org.apache.commons.logging.Log;
@@ -315,11 +315,11 @@ public class MutatiesProcessor
 
 	public static void main(String[] args) throws Exception
 	{
-		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
+		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		MutatiesProcessor processor = new MutatiesProcessor();
 		processor.logger.info("Processor started");
-		processor.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
-		processor.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
+		processor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
+		processor.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		processor.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 		processor.execute();
 		processor.logger.info("Processor finished");
