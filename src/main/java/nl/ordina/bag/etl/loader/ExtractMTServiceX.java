@@ -44,7 +44,7 @@ import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 
-public class ExtractMTServiceX extends ExtractMTService
+public class ExtractMTServiceX extends ExtractMTLoader
 {
 	public class ExceptionListener
 	{
