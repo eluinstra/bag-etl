@@ -38,7 +38,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class MutatiesFileService
+public class MutatiesFileLoader
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	private BAGMutatiesDAO bagMutatiesDAO;
@@ -74,7 +74,7 @@ public class MutatiesFileService
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		MutatiesFileService importMutatiesFile = new MutatiesFileService();
+		MutatiesFileLoader importMutatiesFile = new MutatiesFileLoader();
 		importMutatiesFile.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
 		importMutatiesFile.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXAM02","NEDERLAND","LEVENSCYCLUS","XML","ABONNEMENT_MUTATIE","02"));
 		importMutatiesFile.importMutatiesFile(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));

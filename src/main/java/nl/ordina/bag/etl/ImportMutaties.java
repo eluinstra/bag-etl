@@ -20,8 +20,8 @@ import java.io.File;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import nl.ordina.bag.etl.loader.MutatiesFileService;
-import nl.ordina.bag.etl.loader.MutatiesService;
+import nl.ordina.bag.etl.loader.MutatiesFileLoader;
+import nl.ordina.bag.etl.loader.MutatiesLoader;
 import nl.ordina.bag.etl.processor.ProcessingException;
 import nl.ordina.bag.etl.util.ServiceLocator;
 import nl.ordina.bag.etl.validation.ValidationException;
@@ -36,15 +36,15 @@ public class ImportMutaties
 		{
 			logger.info("ImportMutaties started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
-			MutatiesFileService mutatiesFileService = (MutatiesFileService)serviceLocator.get("mutatiesFileService");
-			MutatiesService mutatiesService = (MutatiesService)serviceLocator.get("mutatiesService");
+			MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileService");
+			MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
 			logger.info("Import Mutaties File started.");
 			for (String filename : args)
 				try
 				{
 					filename = filename.trim();
 					logger.info("Processing file " + filename + " started");
-					mutatiesFileService.importMutatiesFile(new File(filename));
+					mutatiesFileLoader.importMutatiesFile(new File(filename));
 					logger.info("Processing file " + filename + " finished");
 				}
 				catch (ProcessingException | ValidationException e)
@@ -53,7 +53,7 @@ public class ImportMutaties
 				}
 			logger.info("Import Mutaties File ended.");
 			logger.info("Import Mutaties started.");
-			mutatiesService.importMutaties();
+			mutatiesLoader.importMutaties();
 			logger.info("Import Mutaties ended.");
 			logger.info("ImportMutaties finished");
 		}

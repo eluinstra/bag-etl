@@ -39,7 +39,7 @@ import nl.ordina.bag.etl.xml.HandlerException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class SimpleExtractService
+public class SimpleExtractLoader
 {
 	protected transient Log logger = LogFactory.getLog(this.getClass());
 	protected BAGDAO bagDAO;
@@ -223,7 +223,7 @@ public class SimpleExtractService
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		SimpleExtractService job = new SimpleExtractService();
+		SimpleExtractLoader job = new SimpleExtractLoader();
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 

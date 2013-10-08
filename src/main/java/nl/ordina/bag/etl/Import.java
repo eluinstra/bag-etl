@@ -17,9 +17,9 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.loader.ExtractService;
-import nl.ordina.bag.etl.loader.MutatiesFileService;
-import nl.ordina.bag.etl.loader.MutatiesService;
+import nl.ordina.bag.etl.loader.ExtractLoader;
+import nl.ordina.bag.etl.loader.MutatiesFileLoader;
+import nl.ordina.bag.etl.loader.MutatiesLoader;
 import nl.ordina.bag.etl.util.Log4jUtils;
 import nl.ordina.bag.etl.util.ServiceLocator;
 import nl.ordina.bag.etl.util.Utils;
@@ -46,25 +46,25 @@ public class Import
 			if (FileType.EXTRACT.equals(fileType))
 			{
 				logger.info("ImportExtract started");
-				ExtractService extractService = (ExtractService)serviceLocator.get("extractService");
+				ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
 				logger.info("Processing file " + file.getName() + " started");
-				extractService.importExtract(file);
+				extractLoader.importExtract(file);
 				logger.info("Processing file " + file.getName() + " finished");
 				logger.info("ImportExtract finished");
 			}
 			else if (FileType.MUTATIES.equals(fileType))
 			{
 				logger.info("ImportMutaties started");
-				MutatiesFileService mutatiesFileService = (MutatiesFileService)serviceLocator.get("mutatiesFileService");
-				MutatiesService mutatiesService = (MutatiesService)serviceLocator.get("mutatiesService");
+				MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileService");
+				MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
 				logger.info("Import Mutaties File started.");
 				logger.info("Processing file " + file.getName() + " started");
-				mutatiesFileService.importMutatiesFile(file);
+				mutatiesFileLoader.importMutatiesFile(file);
 				logger.info("Processing file " + file.getName() + " finished");
 				logger.info("Import Mutaties File ended.");
 
 				logger.info("Import Mutaties started.");
-				mutatiesService.importMutaties();
+				mutatiesLoader.importMutaties();
 				logger.info("Import Mutaties ended.");
 				logger.info("ImportMutaties finished");
 			}
