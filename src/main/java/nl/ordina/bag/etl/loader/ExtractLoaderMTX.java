@@ -44,7 +44,7 @@ import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 
-public class ExtractMTLoaderX extends ExtractLoaderMT
+public class ExtractLoaderMTX extends ExtractLoaderMT
 {
 	public class ExceptionListener
 	{
@@ -304,7 +304,7 @@ public class ExtractMTLoaderX extends ExtractLoaderMT
 	public static void main(String[] args) throws Exception
 	{
 		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		ExtractMTLoaderX loader = new ExtractMTLoaderX();
+		ExtractLoaderMTX loader = new ExtractLoaderMTX();
 		loader.setMaxThreads(8);
 		loader.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		loader.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
