@@ -20,9 +20,9 @@ import java.io.File;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import nl.ordina.bag.etl.loader.MutatiesFileService;
+import nl.ordina.bag.etl.loader.MutatiesService;
 import nl.ordina.bag.etl.processor.ProcessingException;
-import nl.ordina.bag.etl.service.MutatiesFileService;
-import nl.ordina.bag.etl.service.MutatiesService;
 import nl.ordina.bag.etl.util.ServiceLocator;
 import nl.ordina.bag.etl.validation.ValidationException;
 

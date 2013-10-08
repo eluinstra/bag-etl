@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.ordina.bag.etl.service;
+package nl.ordina.bag.etl.loader;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
@@ -44,31 +45,10 @@ import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 
-public class ExtractMTServiceX extends ExtractMTService
+public class ExtractMTService extends ExtractService
 {
-	public class ExceptionListener
-	{
-		private Exception exception;
-
-		public boolean exception()
-		{
-			return exception != null;
-		}
-		public void onException(Exception exception)
-		{
-			synchronized (this)
-			{
-				if (this.exception == null)
-					this.exception = exception;
-			}
-		}
-		public Exception getException()
-		{
-			return exception;
-		}
-	}
-
-	protected ExceptionListener exceptionListener = new ExceptionListener();
+	protected ExecutorService executorService;
+	protected int maxThreads = 4;
 
 	protected void processBAGExtractFile(BAGExtractLevering levering, ZipFile zipFile) throws ProcessorException
 	{
@@ -99,21 +79,22 @@ public class ExtractMTServiceX extends ExtractMTService
 				logger.info("Processing file " + filename + " started");
 				zipStreamReader.read(zipFile.getInputStream(entry));
 				logger.info("Processing file " + filename + " finished");
-
-				executorService.shutdown();
-				executorService.awaitTermination(Long.MAX_VALUE,TimeUnit.DAYS);
 			}
-			catch (Exception e)
+			catch (IOException e)
+			{
+				throw new ProcessingException(e);
+			}
+			finally
 			{
 				try
 				{
-					executorService.shutdownNow();
+					executorService.shutdown();
 					executorService.awaitTermination(Long.MAX_VALUE,TimeUnit.DAYS);
 				}
-				catch (InterruptedException ignore)
+				catch (InterruptedException e)
 				{
+					throw new ProcessorException(e);
 				}
-				throw new ProcessingException(e);
 			}
 		}
 	}
@@ -125,8 +106,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final Woonplaats woonplaats) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -140,7 +119,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -150,8 +129,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final OpenbareRuimte openbareRuimte) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -165,7 +142,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -175,8 +152,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final Nummeraanduiding nummeraanduiding) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -190,7 +165,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -200,8 +175,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final Pand pand) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -215,7 +188,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -225,8 +198,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final Verblijfsobject verblijfsobject) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -240,7 +211,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -250,8 +221,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final Ligplaats ligplaats) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -265,7 +234,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -275,8 +244,6 @@ public class ExtractMTServiceX extends ExtractMTService
 			@Override
 			public void handle(final Standplaats standplaats) throws HandlerException
 			{
-				if (exceptionListener.exception())
-					throw new ProcessingException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -290,7 +257,7 @@ public class ExtractMTServiceX extends ExtractMTService
 							}
 							catch (Exception e)
 							{
-								exceptionListener.onException(e);
+								logger.error("",e);
 							}
 						}
 					}
@@ -301,10 +268,15 @@ public class ExtractMTServiceX extends ExtractMTService
 		reader.parse(stream);
 	}
 
+	public void setMaxThreads(int maxThreads)
+	{
+		this.maxThreads = maxThreads;
+	}
+	
 	public static void main(String[] args) throws Exception
 	{
 		ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		ExtractMTServiceX job = new ExtractMTServiceX();
+		ExtractMTService job = new ExtractMTService();
 		job.setMaxThreads(8);
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));

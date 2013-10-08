@@ -20,7 +20,7 @@ import java.io.File;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import nl.ordina.bag.etl.service.ExtractService;
+import nl.ordina.bag.etl.loader.ExtractService;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
 public class ImportExtract

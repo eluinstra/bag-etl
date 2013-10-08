@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.ordina.bag.etl.service;
+package nl.ordina.bag.etl.loader;
 
 import java.io.File;
 import java.io.FileInputStream;

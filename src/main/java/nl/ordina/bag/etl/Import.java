@@ -17,9 +17,9 @@ package nl.ordina.bag.etl;
 
 import java.io.File;
 
-import nl.ordina.bag.etl.service.ExtractService;
-import nl.ordina.bag.etl.service.MutatiesFileService;
-import nl.ordina.bag.etl.service.MutatiesService;
+import nl.ordina.bag.etl.loader.ExtractService;
+import nl.ordina.bag.etl.loader.MutatiesFileService;
+import nl.ordina.bag.etl.loader.MutatiesService;
 import nl.ordina.bag.etl.util.Log4jUtils;
 import nl.ordina.bag.etl.util.ServiceLocator;
 import nl.ordina.bag.etl.util.Utils;
