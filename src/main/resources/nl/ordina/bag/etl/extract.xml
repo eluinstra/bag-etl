@@ -30,7 +30,7 @@
 		<property name="productversie" value="${bagLeveringInfo.productversie}"/>
 	</bean>
 
-	<bean id="extractLoader" class="nl.ordina.bag.etl.loader.ExtractLoaderMTX">
+	<bean id="extractLoader" class="nl.ordina.bag.etl.loader.ExtractLoaderMT">
 		<property name="maxThreads" value="${importExtract.maxThreads}"/>
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagDAO" ref="bagDAO"/>

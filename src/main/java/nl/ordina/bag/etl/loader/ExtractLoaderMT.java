@@ -35,6 +35,7 @@ import nl.kadaster.schemas.imbag.lvc.v20090901.Verblijfsobject;
 import nl.kadaster.schemas.imbag.lvc.v20090901.Woonplaats;
 import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.dao.BAGDAO;
+import nl.ordina.bag.etl.dao.DAOException;
 import nl.ordina.bag.etl.model.BAGObjectFactory;
 import nl.ordina.bag.etl.processor.ProcessingException;
 import nl.ordina.bag.etl.processor.ProcessorException;
@@ -44,9 +45,33 @@ import nl.ordina.bag.etl.validation.BAGExtractLeveringValidator;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
+import nl.ordina.bag.etl.xml.ParserException;
 
 public class ExtractLoaderMT extends ExtractLoader
 {
+	public class ExceptionListener
+	{
+		private Exception exception;
+
+		public boolean exception()
+		{
+			return exception != null;
+		}
+		public void onException(Exception exception)
+		{
+			synchronized (this)
+			{
+				if (this.exception == null)
+					this.exception = exception;
+			}
+		}
+		public Exception getException()
+		{
+			return exception;
+		}
+	}
+
+	protected ExceptionListener exceptionListener = new ExceptionListener();
 	protected ExecutorService executorService;
 	protected int maxThreads = 4;
 
@@ -79,13 +104,7 @@ public class ExtractLoaderMT extends ExtractLoader
 				logger.info("Processing file " + filename + " started");
 				zipStreamReader.read(zipFile.getInputStream(entry));
 				logger.info("Processing file " + filename + " finished");
-			}
-			catch (IOException e)
-			{
-				throw new ProcessingException(e);
-			}
-			finally
-			{
+
 				try
 				{
 					executorService.shutdown();
@@ -93,8 +112,21 @@ public class ExtractLoaderMT extends ExtractLoader
 				}
 				catch (InterruptedException e)
 				{
-					throw new ProcessorException(e);
+					logger.trace("",e);
 				}
+			}
+			catch (ParserException | DAOException | IOException e)
+			{
+				try
+				{
+					executorService.shutdownNow();
+					executorService.awaitTermination(Long.MAX_VALUE,TimeUnit.DAYS);
+				}
+				catch (InterruptedException ignore)
+				{
+					logger.trace("",e);
+				}
+				throw new ProcessingException(e);
 			}
 		}
 	}
@@ -106,6 +138,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final Woonplaats woonplaats) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -119,7 +153,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
@@ -129,6 +163,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final OpenbareRuimte openbareRuimte) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -142,7 +178,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
@@ -152,6 +188,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final Nummeraanduiding nummeraanduiding) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -165,7 +203,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
@@ -175,6 +213,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final Pand pand) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -188,7 +228,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
@@ -198,6 +238,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final Verblijfsobject verblijfsobject) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -211,7 +253,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
@@ -221,6 +263,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final Ligplaats ligplaats) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -234,7 +278,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
@@ -244,6 +288,8 @@ public class ExtractLoaderMT extends ExtractLoader
 			@Override
 			public void handle(final Standplaats standplaats) throws HandlerException
 			{
+				if (exceptionListener.exception())
+					throw new HandlerException(exceptionListener.getException());
   			executorService.submit(
 	  			new Runnable()
 					{
@@ -257,7 +303,7 @@ public class ExtractLoaderMT extends ExtractLoader
 							}
 							catch (Exception e)
 							{
-								logger.error("",e);
+								exceptionListener.onException(e);
 							}
 						}
 					}
