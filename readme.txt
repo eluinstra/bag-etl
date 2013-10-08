@@ -112,7 +112,7 @@ Description: tests database connection
 ==================
 = Format XML File
 ==================
-Usage: nl.ordina.bag.etl.XMLFormatter <filename>
+Usage: nl.ordina.bag.etl.FormatXML <filename>
 Description: writes xml file in readable format to new file
 
-> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.XMLFormatter file.xml
+> java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.FormatXML file.xml

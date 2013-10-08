@@ -34,7 +34,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-public class XMLFormatter
+public class FormatXML
 {
 
 	private static void format(Source source, Result result) throws TransformerException
@@ -54,13 +54,13 @@ public class XMLFormatter
 	{
 		if (args.length == 1)
 		{
-			System.out.println("XMLFormatter started");
+			System.out.println("FormatXML started");
 			String filename = args[0];
 			format(new StreamSource(new File(filename)),new StreamResult(new File(filename + ".xml")));
-			System.out.println("XMLFormatter finished");
+			System.out.println("FormatXML finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.XMLFormatter <filename>");
+			System.out.println("Usage: nl.ordina.bag.etl.FormatXML <filename>");
 	}
 
 }
