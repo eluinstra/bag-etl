@@ -23,25 +23,25 @@ import org.apache.commons.logging.LogFactory;
 import nl.ordina.bag.etl.loader.ExtractLoader;
 import nl.ordina.bag.etl.util.ServiceLocator;
 
-public class ImportExtract
+public class LoadExtract
 {
-	public static Log logger = LogFactory.getLog(ImportExtract.class);
+	public static Log logger = LogFactory.getLog(LoadExtract.class);
 
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length == 1)
 		{
-			logger.info("ImportExtract started");
+			logger.info("LoadExtract started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/extract.xml");
 			ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
 			String filename = args[0].trim(); 
 			logger.info("Processing file " + filename + " started");
 			extractLoader.importExtract(new File(filename));
 			logger.info("Processing file " + filename + " finished");
-			logger.info("ImportExtract finished");
+			logger.info("LoadExtract finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.ImportExtract <filename>");
+			System.out.println("Usage: nl.ordina.bag.etl.LoadExtract <filename>");
 		System.exit(0);
 	}
 }

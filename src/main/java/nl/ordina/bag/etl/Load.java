@@ -29,15 +29,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Level;
 
-public class Import
+public class Load
 {
-	public static Log logger = LogFactory.getLog(Import.class);
+	public static Log logger = LogFactory.getLog(Load.class);
 
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length > 0 && args.length < 3)
 		{
-			logger.info("Import started");
+			logger.info("Load started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationContext.xml");
 			File file = new File(args[0].trim());
 			if (args.length == 2)
@@ -45,35 +45,35 @@ public class Import
 			FileType fileType = Utils.getFileType(file);
 			if (FileType.EXTRACT.equals(fileType))
 			{
-				logger.info("ImportExtract started");
+				logger.info("LoadExtract started");
 				ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
 				logger.info("Processing file " + file.getName() + " started");
 				extractLoader.importExtract(file);
 				logger.info("Processing file " + file.getName() + " finished");
-				logger.info("ImportExtract finished");
+				logger.info("LoadExtract finished");
 			}
 			else if (FileType.MUTATIES.equals(fileType))
 			{
-				logger.info("ImportMutaties started");
+				logger.info("LoadMutaties started");
 				MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileService");
 				MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
-				logger.info("Import Mutaties File started.");
+				logger.info("Load Mutaties File started.");
 				logger.info("Processing file " + file.getName() + " started");
 				mutatiesFileLoader.importMutatiesFile(file);
 				logger.info("Processing file " + file.getName() + " finished");
-				logger.info("Import Mutaties File ended.");
+				logger.info("Load Mutaties File ended.");
 
-				logger.info("Import Mutaties started.");
+				logger.info("Load Mutaties started.");
 				mutatiesLoader.importMutaties();
-				logger.info("Import Mutaties ended.");
-				logger.info("ImportMutaties finished");
+				logger.info("Load Mutaties ended.");
+				logger.info("LoadMutaties finished");
 			}
 			else
 				logger.warn(file.getName() + " is not a valid BAG file!");
-			logger.info("Import finished");
+			logger.info("Load finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.Import <filename> [<loglevel>]");
+			System.out.println("Usage: nl.ordina.bag.etl.Load <filename> [<loglevel>]");
 		System.exit(0);
 	}
 }

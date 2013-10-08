@@ -26,19 +26,19 @@ import nl.ordina.bag.etl.processor.ProcessingException;
 import nl.ordina.bag.etl.util.ServiceLocator;
 import nl.ordina.bag.etl.validation.ValidationException;
 
-public class ImportMutaties
+public class LoadMutaties
 {
-	public static Log logger = LogFactory.getLog(ImportMutaties.class);
+	public static Log logger = LogFactory.getLog(LoadMutaties.class);
 
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length > 0)
 		{
-			logger.info("ImportMutaties started");
+			logger.info("LoadMutaties started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
 			MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileService");
 			MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
-			logger.info("Import Mutaties File started.");
+			logger.info("Load Mutaties File started.");
 			for (String filename : args)
 				try
 				{
@@ -51,14 +51,14 @@ public class ImportMutaties
 				{
 					logger.error(e);
 				}
-			logger.info("Import Mutaties File ended.");
-			logger.info("Import Mutaties started.");
+			logger.info("Load Mutaties File ended.");
+			logger.info("Load Mutaties started.");
 			mutatiesLoader.importMutaties();
-			logger.info("Import Mutaties ended.");
-			logger.info("ImportMutaties finished");
+			logger.info("Load Mutaties ended.");
+			logger.info("LoadMutaties finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.ImportMutaties <filename> [<filename>]");
+			System.out.println("Usage: nl.ordina.bag.etl.LoadMutaties <filename> [<filename>]");
 		System.exit(0);
 	}
 }

@@ -29,15 +29,15 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
-public class ImportMutatiesDirect
+public class LoadMutatiesDirect
 {
-	public static Log logger = LogFactory.getLog(ImportMutatiesDirect.class);
+	public static Log logger = LogFactory.getLog(LoadMutatiesDirect.class);
 
 	public static void main(String[] args) throws Exception
 	{
 		if (args.length > 0)
 		{
-			logger.info("ImportMutatiesDirect started");
+			logger.info("LoadMutatiesDirect started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
 			BAGMutatiesDAO bagMutatiesDAO = (BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO");
 			final MutatiesFileProcessor mutatiesFileProcessor = (MutatiesFileProcessor)serviceLocator.get("mutatiesFileProcessor");
@@ -68,10 +68,10 @@ public class ImportMutatiesDirect
 					}
 				);
 			}
-			logger.info("ImportMutatiesDirect finished");
+			logger.info("LoadMutatiesDirect finished");
 		}
 		else
-			System.out.println("Usage: nl.ordina.bag.etl.ImportMutatiesDirect <filename> [<filename>]");
+			System.out.println("Usage: nl.ordina.bag.etl.LoadMutatiesDirect <filename> [<filename>]");
 		System.exit(0);
 	}
 }
