@@ -20,10 +20,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<import resource="classpath:nl/ordina/bag/etl/applicationConfig.xml" />
-	<import resource="classpath:nl/ordina/bag/etl/datasource.xml" />
-	<import resource="classpath:nl/ordina/bag/etl/dao.xml" />
-
 	<bean id="bagMutatieLeveringValidator" class="nl.ordina.bag.etl.validation.BAGExtractLeveringValidator">
 		<property name="klantnummer" value="${bagLeveringInfo.klantnummer}"/>
 		<property name="productcode" value="${bagLeveringInfo.mutatie.productcode}"/>

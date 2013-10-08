@@ -35,10 +35,10 @@ public class Import
 
 	public static void main(String[] args) throws Exception
 	{
-		if (args.length > 0)
+		if (args.length > 0 && args.length < 3)
 		{
 			logger.info("Import started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/extract.xml","nl/ordina/bag/etl/mutaties.xml");
+			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationContext.xml");
 			File file = new File(args[0].trim());
 			if (args.length == 2)
 				Log4jUtils.setLogLevel("nl.ordina.bag.etl",Level.toLevel(args[1].trim()));

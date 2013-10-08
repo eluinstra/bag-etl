@@ -32,7 +32,7 @@ public class ImportExtract
 		if (args.length == 1)
 		{
 			logger.info("ImportExtract started");
-			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/extract.xml");
+			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/extract.xml");
 			ExtractService extractService = (ExtractService)serviceLocator.get("extractService");
 			String filename = args[0].trim(); 
 			logger.info("Processing file " + filename + " started");
