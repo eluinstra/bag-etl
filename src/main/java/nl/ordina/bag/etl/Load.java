@@ -46,7 +46,7 @@ public class Load
 			if (FileType.EXTRACT.equals(fileType))
 			{
 				logger.info("LoadExtract started");
-				ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
+				ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractLoader");
 				logger.info("Processing file " + file.getName() + " started");
 				extractLoader.execute(file);
 				logger.info("Processing file " + file.getName() + " finished");
@@ -55,8 +55,8 @@ public class Load
 			else if (FileType.MUTATIES.equals(fileType))
 			{
 				logger.info("LoadMutaties started");
-				MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileService");
-				MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
+				MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileLoader");
+				MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesLoader");
 				logger.info("Load Mutaties File started.");
 				logger.info("Processing file " + file.getName() + " started");
 				mutatiesFileLoader.execute(file);

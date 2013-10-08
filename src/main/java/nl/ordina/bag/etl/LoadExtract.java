@@ -33,7 +33,7 @@ public class LoadExtract
 		{
 			logger.info("LoadExtract started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/extract.xml");
-			ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
+			ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractLoader");
 			String filename = args[0].trim(); 
 			logger.info("Processing file " + filename + " started");
 			extractLoader.execute(new File(filename));

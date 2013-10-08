@@ -36,8 +36,8 @@ public class LoadMutaties
 		{
 			logger.info("LoadMutaties started");
 			ServiceLocator serviceLocator = ServiceLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml","nl/ordina/bag/etl/mutaties.xml");
-			MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileService");
-			MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
+			MutatiesFileLoader mutatiesFileLoader = (MutatiesFileLoader)serviceLocator.get("mutatiesFileLoader");
+			MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesLoader");
 			logger.info("Load Mutaties File started.");
 			for (String filename : args)
 				try
