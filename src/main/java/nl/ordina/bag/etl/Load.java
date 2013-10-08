@@ -48,7 +48,7 @@ public class Load
 				logger.info("LoadExtract started");
 				ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
 				logger.info("Processing file " + file.getName() + " started");
-				extractLoader.importExtract(file);
+				extractLoader.execute(file);
 				logger.info("Processing file " + file.getName() + " finished");
 				logger.info("LoadExtract finished");
 			}
@@ -59,12 +59,12 @@ public class Load
 				MutatiesLoader mutatiesLoader = (MutatiesLoader)serviceLocator.get("mutatiesService");
 				logger.info("Load Mutaties File started.");
 				logger.info("Processing file " + file.getName() + " started");
-				mutatiesFileLoader.importMutatiesFile(file);
+				mutatiesFileLoader.execute(file);
 				logger.info("Processing file " + file.getName() + " finished");
 				logger.info("Load Mutaties File ended.");
 
 				logger.info("Load Mutaties started.");
-				mutatiesLoader.importMutaties();
+				mutatiesLoader.execute();
 				logger.info("Load Mutaties ended.");
 				logger.info("LoadMutaties finished");
 			}

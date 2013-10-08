@@ -44,7 +44,7 @@ public class MutatiesFileLoader
 	private BAGMutatiesDAO bagMutatiesDAO;
 	private BAGExtractLeveringValidator bagExtractLeveringValidator;
 
-	public void importMutatiesFile(File mutatiesFile) throws ZipException, IOException, JAXBException
+	public void execute(File mutatiesFile) throws ZipException, IOException, JAXBException
 	{
 		ZipFile zipFile = new ZipFile(mutatiesFile);
 		BAGExtractLevering levering = Utils.readBagExtractLevering(zipFile,FileType.MUTATIES);
@@ -77,10 +77,10 @@ public class MutatiesFileLoader
 		MutatiesFileLoader importMutatiesFile = new MutatiesFileLoader();
 		importMutatiesFile.setBagMutatiesDAO((BAGMutatiesDAO)serviceLocator.get("bagMutatiesDAO"));
 		importMutatiesFile.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXAM02","NEDERLAND","LEVENSCYCLUS","XML","ABONNEMENT_MUTATIE","02"));
-		importMutatiesFile.importMutatiesFile(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
-		importMutatiesFile.importMutatiesFile(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
-		importMutatiesFile.importMutatiesFile(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));
-		importMutatiesFile.importMutatiesFile(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"));
+		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
+		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
+		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));
+		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"));
 		System.exit(0);
 	}
 }

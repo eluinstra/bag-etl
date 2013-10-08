@@ -309,7 +309,7 @@ public class ExtractMTLoaderX extends ExtractMTLoader
 		job.setBagDAO((BAGDAO)serviceLocator.get("bagDAO"));
 		job.setBagObjectFactory(new BAGObjectFactory(new BAGGeometrieHandler()));
 		job.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXEE02","NEDERLAND","LEVENSCYCLUS","XML","EENMALIG_EXTRACT","02"));
-		job.importExtract(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
+		job.execute(new File("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
 		System.exit(0);
 	}
 }

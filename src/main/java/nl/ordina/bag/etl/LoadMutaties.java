@@ -44,7 +44,7 @@ public class LoadMutaties
 				{
 					filename = filename.trim();
 					logger.info("Processing file " + filename + " started");
-					mutatiesFileLoader.importMutatiesFile(new File(filename));
+					mutatiesFileLoader.execute(new File(filename));
 					logger.info("Processing file " + filename + " finished");
 				}
 				catch (ProcessingException | ValidationException e)
@@ -53,7 +53,7 @@ public class LoadMutaties
 				}
 			logger.info("Load Mutaties File ended.");
 			logger.info("Load Mutaties started.");
-			mutatiesLoader.importMutaties();
+			mutatiesLoader.execute();
 			logger.info("Load Mutaties ended.");
 			logger.info("LoadMutaties finished");
 		}

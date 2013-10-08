@@ -42,7 +42,7 @@ public class MutatiesLoader
 	protected MutatiesFileProcessor mutatiesFileProcessor;
 	protected MutatiesProcessor mutatiesProcessor;
 
-	public void importMutaties()
+	public void execute()
 	{
 		while (true)
 		{
@@ -113,7 +113,7 @@ public class MutatiesLoader
 		mutatiesProcessor.setMutationListener(new DefaultMutationListener());
 		importMutaties.setMutatiesProcessor(mutatiesProcessor);
 
-		importMutaties.importMutaties();
+		importMutaties.execute();
 		System.exit(0);
 	}
 }

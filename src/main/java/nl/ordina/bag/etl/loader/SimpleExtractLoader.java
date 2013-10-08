@@ -46,7 +46,7 @@ public class SimpleExtractLoader
 	private BAGObjectFactory bagObjectFactory;
 	protected long skipObjects;
 
-	public void importMutatiesFile(InputStream extractFile) throws FileNotFoundException, IOException
+	public void execute(InputStream extractFile) throws FileNotFoundException, IOException
 	{
 		ZipStreamReader zipStreamReader = new ZipStreamReader()
 		{
@@ -231,7 +231,7 @@ public class SimpleExtractLoader
 		//for (String filename : filenames)
 			//job.execute(new FileInputStream("i:/BAGExtract/" + filename));
 
-		job.importMutatiesFile(new FileInputStream("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
+		job.execute(new FileInputStream("i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip"));
 
 		System.exit(0);
 	}

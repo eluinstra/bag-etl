@@ -36,7 +36,7 @@ public class LoadExtract
 			ExtractLoader extractLoader = (ExtractLoader)serviceLocator.get("extractService");
 			String filename = args[0].trim(); 
 			logger.info("Processing file " + filename + " started");
-			extractLoader.importExtract(new File(filename));
+			extractLoader.execute(new File(filename));
 			logger.info("Processing file " + filename + " finished");
 			logger.info("LoadExtract finished");
 		}
