@@ -15,8 +15,6 @@
  */
 package nl.ordina.bag.etl.dao;
 
-import java.io.IOException;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -36,7 +34,6 @@ import nl.ordina.bag.etl.model.mutatie.BAGMutatie;
 import nl.ordina.bag.etl.model.mutatie.MutatiesFile;
 import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -140,21 +137,13 @@ public abstract class AbstractBAGMutatiesDAO implements BAGMutatiesDAO
 					@Override
 					public MutatiesFile mapRow(ResultSet rs, int row) throws SQLException
 					{
-						try
-						{
-							MutatiesFile object = new MutatiesFile();
-							object.setId(rs.getLong("id"));
-							object.setDateFrom(rs.getDate("date_from"));
-							object.setDateTo(rs.getDate("date_to"));
-							Blob blob = rs.getBlob("content");
-							object.setStatus(ProcessingStatus.values()[rs.getInt("status")]);
-							object.setContent(IOUtils.toByteArray(blob.getBinaryStream()));
-							return object;
-						}
-						catch (IOException e)
-						{
-							throw new SQLException(e);
-						}
+						MutatiesFile object = new MutatiesFile();
+						object.setId(rs.getLong("id"));
+						object.setDateFrom(rs.getDate("date_from"));
+						object.setDateTo(rs.getDate("date_to"));
+						object.setContent(rs.getBytes("content"));
+						object.setStatus(ProcessingStatus.values()[rs.getInt("status")]);
+						return object;
 					}
 				}
 			);
