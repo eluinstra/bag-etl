@@ -99,21 +99,21 @@ public class MutatiesLoader
 	{
 		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
 		
-		MutatiesLoader importMutaties = new MutatiesLoader();
-		importMutaties.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
-		importMutaties.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
+		MutatiesLoader mutatiesLoader = new MutatiesLoader();
+		mutatiesLoader.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
+		mutatiesLoader.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		
 		MutatiesFileProcessor mutatiesFileProcessor = new MutatiesFileProcessor();
 		mutatiesFileProcessor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
-		importMutaties.setMutatiesFileProcessor(mutatiesFileProcessor);
+		mutatiesLoader.setMutatiesFileProcessor(mutatiesFileProcessor);
 		
 		MutatiesProcessor mutatiesProcessor = new SimpleMutatiesProcessor();
 		mutatiesProcessor.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
 		mutatiesProcessor.setBagDAO((BAGDAO)beanLocator.get("bagDAO"));
 		mutatiesProcessor.setMutationListener(new DefaultMutationListener());
-		importMutaties.setMutatiesProcessor(mutatiesProcessor);
+		mutatiesLoader.setMutatiesProcessor(mutatiesProcessor);
 
-		importMutaties.execute();
+		mutatiesLoader.execute();
 		System.exit(0);
 	}
 }

@@ -25,7 +25,7 @@ override properties file bag.properties:
 # Override properties
 #-------------------------------------------------------------------------------
 
-job.importExtract.maxThreads=8
+loadExtract.maxThreads=8
 
 bagLeveringInfo.klantnummer=9990000000
 bagLeveringInfo.gebiedType=NEDERLAND
@@ -52,11 +52,11 @@ bag.pool.preferredTestQuery=select 1 from dual
 #bag.jdbc.password=bag
 #bag.pool.preferredTestQuery=select 1
 
-==================
-= Import BAG File
-==================
+================
+= Load BAG File
+================
 Usage: nl.ordina.bag.etl.Load <filename> [<loglevel>]
-Description: Takes BAGFile as argument. Depending on the file type it executes BAG Extract or Mutaties Import.
+Description: Takes BAGFile as argument. Depending on the file type it executes Load BAG Extract or Mutaties.
 
 > java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Load i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip debug
 > java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Load i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip
@@ -65,7 +65,7 @@ Description: Takes BAGFile as argument. Depending on the file type it executes B
 > java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.Load i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
 =====================
-= Import BAG Extract
+= Load BAG Extract
 =====================
 Usage: nl.ordina.bag.etl.LoadExtract <filename>
 Description: Takes BAGExtractFile as argument. Parses, validates and imports BAGExtractFile into bag tables and writes initial record in table bag_mutaties_file with date_from = 01-01-1970 and status = 1.
@@ -73,7 +73,7 @@ Description: Takes BAGExtractFile as argument. Parses, validates and imports BAG
 > java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.LoadExtract i:/BAGExtract/DNLDLXEE02-9990000000-999000006-01042011.zip
 
 ======================
-= Import BAG Mutaties
+= Load BAG Mutaties
 ======================
 Usage: nl.ordina.bag.etl.LoadMutaties <filename> [<filename>]
 Description: Takes BAGMutatiesFile(s) as argument. Parses, validates and imports BAGMutatiesFiles into table bag_mutaties_file. Then while available:
@@ -89,7 +89,7 @@ Description: Takes BAGMutatiesFile(s) as argument. Parses, validates and imports
 > java -cp bag-etl-mail-1.0.0-jar-with-dependencies.jar nl.ordina.bag.etl.LoadMutaties i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip
 
 =============================
-= Import BAG Mutaties Direct
+= Load BAG Mutaties Direct
 =============================
 Usage: nl.ordina.bag.etl.LoadMutatiesDirect <filename> [<filename>]
 Description: Takes BAGMutatiesFile(s) as argument. Parses and imports each BAGMutatiesFile into table bag_mutatie and export BAGMutaties from table bag_mutatie to bag tables.

@@ -74,13 +74,13 @@ public class MutatiesFileLoader
 	public static void main(String[] args) throws Exception
 	{
 		BeanLocator beanLocator = BeanLocator.getInstance("nl/ordina/bag/etl/applicationConfig.xml","nl/ordina/bag/etl/datasource.xml","nl/ordina/bag/etl/dao.xml");
-		MutatiesFileLoader importMutatiesFile = new MutatiesFileLoader();
-		importMutatiesFile.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
-		importMutatiesFile.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXAM02","NEDERLAND","LEVENSCYCLUS","XML","ABONNEMENT_MUTATIE","02"));
-		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
-		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
-		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));
-		importMutatiesFile.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"));
+		MutatiesFileLoader mutatiesFileLoader = new MutatiesFileLoader();
+		mutatiesFileLoader.setBagMutatiesDAO((BAGMutatiesDAO)beanLocator.get("bagMutatiesDAO"));
+		mutatiesFileLoader.setBagExtractLeveringValidator(new BAGExtractLeveringValidator("9990000000","DNLDLXAM02","NEDERLAND","LEVENSCYCLUS","XML","ABONNEMENT_MUTATIE","02"));
+		mutatiesFileLoader.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000000-01042011-02042011.zip"));
+		mutatiesFileLoader.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000001-02042011-03042011.zip"));
+		mutatiesFileLoader.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000002-03042011-04042011.zip"));
+		mutatiesFileLoader.execute(new File("i:/BAGMutaties/DNLDLXAM02-9990000000-999000003-04042011-05042011.zip"));
 		System.exit(0);
 	}
 }
