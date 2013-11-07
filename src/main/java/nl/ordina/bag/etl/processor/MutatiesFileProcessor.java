@@ -68,13 +68,13 @@ public class MutatiesFileProcessor
 			@Override
 			public void handle(String filename, InputStream stream) throws IOException
 			{
-				if (filename.matches("9999MUT\\d{8}-\\d{8}\\.zip"))
+				if (filename.matches("\\d{4}MUT\\d{8}-\\d{8}\\.zip"))
 				{
 					logger.info("Processing file " + filename + " started");
 					read(stream);
 					logger.info("Processing file " + filename + " finished");
 				}
-				else if (filename.matches("9999MUT\\d{8}-\\d{8}-\\d{6}\\.xml"))
+				else if (filename.matches("\\d{4}MUT\\d{8}-\\d{8}-\\d{6}\\.xml"))
 				{
 					logger.info("Processing file " + filename + " started");
 					processMutatiesXML(stream);

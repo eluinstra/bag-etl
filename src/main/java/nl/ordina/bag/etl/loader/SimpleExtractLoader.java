@@ -53,7 +53,7 @@ public class SimpleExtractLoader
 			@Override
 			public void handle(String filename, InputStream stream) throws IOException
 			{
-				if (filename.matches("9999(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}\\.zip"))
+				if (filename.matches("\\d{4}(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}\\.zip"))
 				{
 					BAGObjectType objectType = BAGObjectType.getBAGObjectTypeByFilename(filename);
 					skipObjects = bagDAO.getCount(objectType);
@@ -63,7 +63,7 @@ public class SimpleExtractLoader
 					read(stream);
 					logger.info("Processing file: " + filename + " finished");
 				}
-				else if (filename.matches("9999(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
+				else if (filename.matches("\\d{4}(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
 				{
 					logger.info("Processing file: " + filename + " started");
 					processXML(stream);
