@@ -6,7 +6,7 @@
 	<artifactId>bag-etl</artifactId>
 	<packaging>jar</packaging>
 	<name>BAG ETL</name>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<description></description>
 	<url>https://github.com/eluinstra/bag-etl</url>
 	<issueManagement>
