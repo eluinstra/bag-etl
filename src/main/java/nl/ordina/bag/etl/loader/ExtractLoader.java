@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,9 +100,33 @@ public class ExtractLoader
 		return result;
 	}
 
+	protected Map<String,String> getFiles(ZipFile zipFile)
+	{
+		Map<String,String> result = new HashMap<String,String>();
+		Enumeration<? extends ZipEntry> entries = zipFile.entries();
+		while (entries.hasMoreElements())
+		{
+			ZipEntry entry = entries.nextElement();
+			if (isMutatieFile(entry.getName()))
+				result.put(getObjectType(entry.getName()),entry.getName());
+		}
+		return result;
+	}
+
+	private boolean isMutatieFile(String name)
+	{
+		return name.matches("^\\d{4}\\w{3}\\d{8}\\.zip$");
+	}
+
+	private String getObjectType(String name)
+	{
+		return name.replaceFirst("^\\d{4}(\\w{3})\\d{8}\\.zip$","$1");
+	}
+
 	protected void processBAGExtractFile(BAGExtractLevering levering, ZipFile zipFile) throws ProcessorException
 	{
-		final Map<String,String> files = getFiles(levering);
+		//final Map<String,String> files = getFiles(levering);
+		final Map<String,String> files = getFiles(zipFile);
 		BAGObjectType[] objectTypes = new BAGObjectType[]{BAGObjectType.WOONPLAATS,BAGObjectType.OPENBARE_RUIMTE,BAGObjectType.NUMMERAANDUIDING,BAGObjectType.PAND,BAGObjectType.VERBLIJFSOBJECT,BAGObjectType.LIGPLAATS,BAGObjectType.STANDPLAATS};
 		for (final BAGObjectType objectType : objectTypes)
 		{
@@ -117,7 +142,7 @@ public class ExtractLoader
 					@Override
 					public void handle(String filename, InputStream stream) throws IOException
 					{
-						if (filename.matches("9999(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
+						if (filename.matches("\\d{4}(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
 						{
 							logger.info("Processing file " + filename + " started");
 							processXML(stream);

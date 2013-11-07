@@ -77,7 +77,8 @@ public class ExtractLoaderMT extends ExtractLoader
 
 	protected void processBAGExtractFile(BAGExtractLevering levering, ZipFile zipFile) throws ProcessorException
 	{
-		final Map<String,String> files = getFiles(levering);
+		//final Map<String,String> files = getFiles(levering);
+		final Map<String,String> files = getFiles(zipFile);
 		BAGObjectType[] objectTypes = new BAGObjectType[]{BAGObjectType.WOONPLAATS,BAGObjectType.OPENBARE_RUIMTE,BAGObjectType.NUMMERAANDUIDING,BAGObjectType.PAND,BAGObjectType.VERBLIJFSOBJECT,BAGObjectType.LIGPLAATS,BAGObjectType.STANDPLAATS};
 		for (final BAGObjectType objectType : objectTypes)
 		{
@@ -91,7 +92,7 @@ public class ExtractLoaderMT extends ExtractLoader
 					@Override
 					public void handle(String filename, InputStream stream) throws IOException
 					{
-						if (filename.matches("9999(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
+						if (filename.matches("\\d{4}(WPL|OPR|NUM|PND|VBO|LIG|STA)\\d{8}-\\d{6}\\.xml"))
 						{
 							logger.info("Processing file " + filename + " started");
 							processXML(stream);
