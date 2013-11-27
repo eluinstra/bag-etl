@@ -37,8 +37,8 @@ import nl.ordina.bag.etl.validation.SchemaValidator;
 public abstract class MutatiesParser implements MutatiesHandler
 {
 	private final String XSD_FILE = "/nl/ordina/bag/etl/xsd/bag-verstrekkingen/extract-deelbestand-mutaties-lvc/v20090901/BagvsExtractDeelbestandMutatieLvc-1.4.xsd";
-	private Schema schema;
-	private XMLMessageBuilder<BAGMutatiesDeelbestandLVC> objectBuilder;
+	protected Schema schema;
+	protected XMLMessageBuilder<BAGMutatiesDeelbestandLVC> objectBuilder;
 
 	public MutatiesParser()
 	{

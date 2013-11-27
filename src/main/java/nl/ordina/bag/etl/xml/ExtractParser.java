@@ -42,8 +42,8 @@ import nl.ordina.bag.etl.validation.SchemaValidator;
 public abstract class ExtractParser implements ExtractHandler
 {
 	private final String XSD_FILE = "/nl/ordina/bag/etl/xsd/bag-verstrekkingen/extract-deelbestand-lvc/v20090901/BagvsExtractDeelbestandExtractLvc-1.4.xsd";
-	private Schema schema;
-	private XMLMessageBuilder<BAGExtractDeelbestandLVC> objectBuilder;
+	protected Schema schema;
+	protected XMLMessageBuilder<BAGExtractDeelbestandLVC> objectBuilder;
 
 	public ExtractParser()
 	{

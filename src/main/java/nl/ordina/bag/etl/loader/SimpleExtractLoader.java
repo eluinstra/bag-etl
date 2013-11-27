@@ -35,6 +35,7 @@ import nl.ordina.bag.etl.util.ZipStreamReader;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
+import nl.ordina.bag.etl.xml.SimpleExtractParser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -78,7 +79,7 @@ public class SimpleExtractLoader
 	
 	protected void processXML(InputStream stream)
 	{
-		ExtractParser reader = new ExtractParser()
+		ExtractParser reader = new SimpleExtractParser()
 		{
 			@Override
 			public void handle(Woonplaats woonplaats) throws HandlerException

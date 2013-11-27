@@ -29,6 +29,7 @@ import nl.ordina.bag.etl.util.BeanLocator;
 import nl.ordina.bag.etl.util.ZipStreamReader;
 import nl.ordina.bag.etl.xml.HandlerException;
 import nl.ordina.bag.etl.xml.MutatiesParser;
+import nl.ordina.bag.etl.xml.SimpleMutatiesParser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -89,7 +90,7 @@ public class MutatiesFileProcessor
 
 	protected void processMutatiesXML(InputStream mutatiesXML)
 	{
-		MutatiesParser reader = new MutatiesParser()
+		MutatiesParser reader = new SimpleMutatiesParser()
 		{
 			@Override
 			public void handle(MutatieProduct mutatieProduct) throws HandlerException
