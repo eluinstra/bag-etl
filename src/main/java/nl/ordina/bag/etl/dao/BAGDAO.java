@@ -36,15 +36,6 @@ public interface BAGDAO
 	boolean exists(Ligplaats ligplaats) throws DAOException;
 	boolean exists(Standplaats standplaats) throws DAOException;
 	
-	boolean existsWoonplaats(long id) throws DAOException;
-	boolean existsOpenbareRuimte(long id) throws DAOException;
-	boolean existsNummeraanduiding(long id) throws DAOException;
-	boolean existsVerblijfsobject(long id) throws DAOException;
-	boolean existsPand(long id) throws DAOException;
-	boolean existsLigplaats(long id) throws DAOException;
-	boolean existsStandplaats(long id) throws DAOException;
-	boolean existsGerelateerdPand(long identificatie);
-
 	void insert(Woonplaats woonplaats) throws DAOException;
 	void insert(OpenbareRuimte openbareRuimte) throws DAOException;
 	void insert(Nummeraanduiding nummeraanduiding) throws DAOException;
