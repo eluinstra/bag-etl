@@ -30,8 +30,10 @@
 		<property name="productversie" value="${bagLeveringInfo.productversie}"/>
 	</bean>
 
-	<bean id="extractLoader" class="nl.ordina.bag.etl.loader.ExtractLoaderMT">
+	<bean id="extractLoader" class="nl.ordina.bag.etl.loader.ExtractLoaderMT" init-method="init">
 		<property name="maxThreads" value="${loadExtract.maxThreads}"/>
+		<property name="processorsScaleFactor" value="${loadExtract.processorsScaleFactor}"/>
+		<property name="queueScaleFactor" value="${loadExtract.queueScaleFactor}"/>
 		<property name="bagMutatiesDAO" ref="bagMutatiesDAO"/>
 		<property name="bagDAO" ref="bagDAO"/>
 		<property name="bagObjectFactory" ref="bagObjectFactory"/>

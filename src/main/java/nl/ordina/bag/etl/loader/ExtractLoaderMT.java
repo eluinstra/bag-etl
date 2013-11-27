@@ -19,8 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -44,6 +45,7 @@ import nl.ordina.bag.etl.util.ZipStreamReader;
 import nl.ordina.bag.etl.validation.BAGExtractLeveringValidator;
 import nl.ordina.bag.etl.xml.BAGGeometrieHandler;
 import nl.ordina.bag.etl.xml.ExtractParser;
+import nl.ordina.bag.etl.xml.SimpleExtractParser;
 import nl.ordina.bag.etl.xml.HandlerException;
 import nl.ordina.bag.etl.xml.ParserException;
 
@@ -73,7 +75,28 @@ public class ExtractLoaderMT extends ExtractLoader
 
 	protected ExceptionListener exceptionListener = new ExceptionListener();
 	protected ExecutorService executorService;
-	protected int maxThreads = 4;
+	protected Integer maxThreads;
+	protected Integer processorsScaleFactor;
+	protected Integer queueScaleFactor;
+
+	public void init()
+	{
+		if (maxThreads == null || maxThreads <= 0)
+		{
+			maxThreads = Runtime.getRuntime().availableProcessors() * processorsScaleFactor;
+			logger.info("Using " + maxThreads + " threads");
+		}
+		if (processorsScaleFactor == null || processorsScaleFactor <= 0)
+		{
+			processorsScaleFactor = 1;
+			logger.info("Using processors scale factor " + processorsScaleFactor);
+		}
+		if (queueScaleFactor == null || queueScaleFactor <= 0)
+		{
+			queueScaleFactor = 1;
+			logger.info("Using queue scale factor " + queueScaleFactor);
+		}
+	}
 
 	protected void processBAGExtractFile(BAGExtractLevering levering, ZipFile zipFile) throws ProcessorException
 	{
@@ -82,7 +105,8 @@ public class ExtractLoaderMT extends ExtractLoader
 		BAGObjectType[] objectTypes = new BAGObjectType[]{BAGObjectType.WOONPLAATS,BAGObjectType.OPENBARE_RUIMTE,BAGObjectType.NUMMERAANDUIDING,BAGObjectType.PAND,BAGObjectType.VERBLIJFSOBJECT,BAGObjectType.LIGPLAATS,BAGObjectType.STANDPLAATS};
 		for (final BAGObjectType objectType : objectTypes)
 		{
-			executorService = Executors.newFixedThreadPool(maxThreads);
+			//executorService = Executors.newFixedThreadPool(maxThreads);
+			executorService = new ThreadPoolExecutor(maxThreads - 1,maxThreads - 1,1,TimeUnit.MINUTES,new ArrayBlockingQueue<Runnable>(maxThreads * queueScaleFactor,true),new ThreadPoolExecutor.CallerRunsPolicy());
 			try
 			{
 				String filename = files.get(objectType.getCode());
@@ -125,7 +149,7 @@ public class ExtractLoaderMT extends ExtractLoader
 				}
 				catch (InterruptedException ignore)
 				{
-					logger.trace("",e);
+					logger.trace("",ignore);
 				}
 				throw new ProcessingException(e);
 			}
@@ -134,14 +158,14 @@ public class ExtractLoaderMT extends ExtractLoader
 	
 	protected void processXML(InputStream stream)
 	{
-		ExtractParser reader = new ExtractParser()
+		ExtractParser reader = new SimpleExtractParser()
 		{
 			@Override
 			public void handle(final Woonplaats woonplaats) throws HandlerException
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -166,7 +190,7 @@ public class ExtractLoaderMT extends ExtractLoader
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -191,7 +215,7 @@ public class ExtractLoaderMT extends ExtractLoader
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -216,7 +240,7 @@ public class ExtractLoaderMT extends ExtractLoader
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -241,7 +265,7 @@ public class ExtractLoaderMT extends ExtractLoader
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -266,7 +290,7 @@ public class ExtractLoaderMT extends ExtractLoader
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -291,7 +315,7 @@ public class ExtractLoaderMT extends ExtractLoader
 			{
 				if (exceptionListener.exception())
 					throw new HandlerException(exceptionListener.getException());
-  			executorService.submit(
+  			executorService.execute(
 	  			new Runnable()
 					{
 						@Override
@@ -318,6 +342,16 @@ public class ExtractLoaderMT extends ExtractLoader
 	public void setMaxThreads(int maxThreads)
 	{
 		this.maxThreads = maxThreads;
+	}
+	
+	public void setProcessorsScaleFactor(Integer processorsScaleFactor)
+	{
+		this.processorsScaleFactor = processorsScaleFactor;
+	}
+	
+	public void setQueueScaleFactor(Integer queueScaleFactor)
+	{
+		this.queueScaleFactor = queueScaleFactor;
 	}
 	
 	public static void main(String[] args) throws Exception
