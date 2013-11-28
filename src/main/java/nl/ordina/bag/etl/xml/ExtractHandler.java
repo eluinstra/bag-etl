@@ -25,19 +25,11 @@ import nl.kadaster.schemas.imbag.lvc.v20090901.Woonplaats;
 
 public interface ExtractHandler
 {
-
 	void handle(Woonplaats woonplaats) throws HandlerException;
-
 	void handle(OpenbareRuimte openbareRuimte) throws HandlerException;
-
 	void handle(Nummeraanduiding nummeraanduiding) throws HandlerException;
-
 	void handle(Pand pand) throws HandlerException;
-
 	void handle(Verblijfsobject verblijfsobject) throws HandlerException;
-
 	void handle(Ligplaats ligplaats) throws HandlerException;
-
 	void handle(Standplaats standplaats) throws HandlerException;
-
 }
