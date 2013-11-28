@@ -21,11 +21,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.kadaster.schemas.imbag.imbag_types.v20090901.TypeAdresseerbaarObject;
 import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.model.BAGAdresseerbaarObject;
+import nl.ordina.bag.etl.model.Gebruiksdoel;
+import nl.ordina.bag.etl.model.GerelateerdPand;
 import nl.ordina.bag.etl.model.Ligplaats;
+import nl.ordina.bag.etl.model.NevenAdres;
 import nl.ordina.bag.etl.model.Nummeraanduiding;
 import nl.ordina.bag.etl.model.OpenbareRuimte;
 import nl.ordina.bag.etl.model.Pand;
@@ -662,6 +667,456 @@ public abstract class AbstractBAGDAO implements BAGDAO
 		catch (DataAccessException e)
 		{
 			throw new DAOException("Error inserting standplaats: " + standplaats.getIdentificatie(),e);
+		}
+	}
+
+	@Override
+	public void insertWoonplaatsen(final List<Woonplaats> woonplaatsen) throws DAOException
+	{
+		try
+		{
+			jdbcTemplate.batchUpdate(
+				"insert into bag_woonplaats (" +
+					"bag_woonplaats_id," +
+					"aanduiding_record_inactief," +
+					"aanduiding_record_correctie," +
+					"woonplaats_naam," +
+					"woonplaats_geometrie," +
+					"officieel," +
+					"begindatum_tijdvak_geldigheid," +
+					"einddatum_tijdvak_geldigheid," +
+					"in_onderzoek," +
+					"bron_documentdatum," +
+					"bron_documentnummer," +
+					"woonplaats_status" +
+				") values (?,?,?,?,?,?,?,?,?,?,?,?)",
+				new BatchPreparedStatementSetter()
+				{
+					@Override
+					public void setValues(PreparedStatement ps, int i) throws SQLException
+					{
+						ps.setLong(1,woonplaatsen.get(i).getIdentificatie());
+						ps.setInt(2,woonplaatsen.get(i).getAanduidingRecordInactief().ordinal());
+						ps.setLong(3,woonplaatsen.get(i).getAanduidingRecordCorrectie());
+						ps.setString(4,woonplaatsen.get(i).getWoonplaatsNaam());
+						ps.setString(5,woonplaatsen.get(i).getWoonplaatsGeometrie());
+						ps.setInt(6,woonplaatsen.get(i).getOfficieel().ordinal());
+						ps.setTimestamp(7,new Timestamp(woonplaatsen.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+						if (woonplaatsen.get(i).getEinddatumTijdvakGeldigheid() == null)
+							ps.setNull(8,Types.TIMESTAMP);
+						else
+							ps.setTimestamp(8,new Timestamp(woonplaatsen.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+						ps.setInt(9,woonplaatsen.get(i).getInOnderzoek().ordinal());
+						ps.setDate(10,new Date(woonplaatsen.get(i).getDocumentdatum().getTime()));
+						ps.setString(11,woonplaatsen.get(i).getDocumentnummer());
+						ps.setInt(12,woonplaatsen.get(i).getWoonplaatsStatus().ordinal());
+					}
+					
+					@Override
+					public int getBatchSize()
+					{
+						return woonplaatsen.size();
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting woonplaatsen",e);
+		}
+	}
+
+	@Override
+	public void insertOpenbareRuimten(final List<OpenbareRuimte> openbareRuimten) throws DAOException
+	{
+		try
+		{
+			jdbcTemplate.batchUpdate(
+				"insert into bag_openbare_ruimte (" +
+					"bag_openbare_ruimte_id," +
+					"aanduiding_record_inactief," +
+					"aanduiding_record_correctie," +
+					"openbare_ruimte_naam," +
+					"officieel," +
+					"begindatum_tijdvak_geldigheid," +
+					"einddatum_tijdvak_geldigheid," +
+					"in_onderzoek," +
+					"openbare_ruimte_type," +
+					"bron_documentdatum," +
+					"bron_documentnummer," +
+					"openbareruimte_status," +
+					"bag_woonplaats_id" +
+				") values (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+				new BatchPreparedStatementSetter()
+				{
+					@Override
+					public void setValues(PreparedStatement ps, int i) throws SQLException
+					{
+						ps.setLong(1,openbareRuimten.get(i).getIdentificatie());
+						ps.setInt(2,openbareRuimten.get(i).getAanduidingRecordInactief().ordinal());
+						ps.setLong(3,openbareRuimten.get(i).getAanduidingRecordCorrectie());
+						ps.setString(4,openbareRuimten.get(i).getOpenbareRuimteNaam());
+						ps.setInt(5,openbareRuimten.get(i).getOfficieel().ordinal());
+						ps.setTimestamp(6,new Timestamp(openbareRuimten.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+						if (openbareRuimten.get(i).getEinddatumTijdvakGeldigheid() == null)
+							ps.setNull(7,Types.TIMESTAMP);
+						else
+							ps.setTimestamp(7,new Timestamp(openbareRuimten.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+						ps.setInt(8,openbareRuimten.get(i).getInOnderzoek().ordinal());
+						ps.setInt(9,openbareRuimten.get(i).getOpenbareRuimteType().ordinal());
+						ps.setDate(10,new Date(openbareRuimten.get(i).getDocumentdatum().getTime()));
+						ps.setString(11,openbareRuimten.get(i).getDocumentnummer());
+						ps.setInt(12,openbareRuimten.get(i).getOpenbareruimteStatus().ordinal());
+						ps.setLong(13,openbareRuimten.get(i).getGerelateerdeWoonplaats());
+					}
+					
+					@Override
+					public int getBatchSize()
+					{
+						return openbareRuimten.size();
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting openbare ruimten",e);
+		}
+	}
+
+	@Override
+	public void insertNummeraanduidingen(final List<Nummeraanduiding> nummeraanduidingen) throws DAOException
+	{
+		try
+		{
+			jdbcTemplate.batchUpdate(
+				"insert into bag_nummeraanduiding (" +
+					"bag_nummeraanduiding_id," +
+					"aanduiding_record_inactief," +
+					"aanduiding_record_correctie," +
+					"huisnummer," +
+					"officieel," +
+					"huisletter," +
+					"huisnummertoevoeging," +
+					"postcode," +
+					"begindatum_tijdvak_geldigheid," +
+					"einddatum_tijdvak_geldigheid," +
+					"in_onderzoek," +
+					"type_adresseerbaar_object," +
+					"bron_documentdatum," +
+					"bron_documentnummer," +
+					"nummeraanduiding_status," +
+					"bag_woonplaats_id," +
+					"bag_openbare_ruimte_id" +
+				") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+				new BatchPreparedStatementSetter()
+				{
+					@Override
+					public void setValues(PreparedStatement ps, int i) throws SQLException
+					{
+						ps.setLong(1,nummeraanduidingen.get(i).getIdentificatie());
+						ps.setInt(2,nummeraanduidingen.get(i).getAanduidingRecordInactief().ordinal());
+						ps.setLong(3,nummeraanduidingen.get(i).getAanduidingRecordCorrectie());
+						ps.setInt(4,nummeraanduidingen.get(i).getHuisnummer());
+						ps.setInt(5,nummeraanduidingen.get(i).getOfficieel().ordinal());
+						if (nummeraanduidingen.get(i).getHuisletter() == null)
+							ps.setNull(6,Types.VARCHAR);
+						else
+							ps.setString(6,nummeraanduidingen.get(i).getHuisletter());
+						if (nummeraanduidingen.get(i).getHuisnummertoevoeging() == null)
+							ps.setNull(7,Types.VARCHAR);
+						else
+							ps.setString(7,nummeraanduidingen.get(i).getHuisnummertoevoeging());
+						if (nummeraanduidingen.get(i).getPostcode() == null)
+							ps.setNull(8,Types.VARCHAR);
+						else
+							ps.setString(8,nummeraanduidingen.get(i).getPostcode());
+						ps.setTimestamp(9,new Timestamp(nummeraanduidingen.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+						if (nummeraanduidingen.get(i).getEinddatumTijdvakGeldigheid() == null)
+							ps.setNull(10,Types.TIMESTAMP);
+						else
+							ps.setTimestamp(10,new Timestamp(nummeraanduidingen.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+						ps.setInt(11,nummeraanduidingen.get(i).getInOnderzoek().ordinal());
+						ps.setInt(12,nummeraanduidingen.get(i).getTypeAdresseerbaarObject().ordinal());
+						ps.setDate(13,new Date(nummeraanduidingen.get(i).getDocumentdatum().getTime()));
+						ps.setString(14,nummeraanduidingen.get(i).getDocumentnummer());
+						ps.setInt(15,nummeraanduidingen.get(i).getNummeraanduidingStatus().ordinal());
+						if (nummeraanduidingen.get(i).getGerelateerdeWoonplaats() == null)
+							ps.setNull(16,Types.INTEGER);
+						else
+							ps.setLong(16,nummeraanduidingen.get(i).getGerelateerdeWoonplaats());
+						ps.setLong(17,nummeraanduidingen.get(i).getGerelateerdeOpenbareRuimte());
+					}
+					
+					@Override
+					public int getBatchSize()
+					{
+						return nummeraanduidingen.size();
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting nummeraanduidingen",e);
+		}
+	}
+
+	@Override
+	public void insertPanden(final List<Pand> panden) throws DAOException
+	{
+		try
+		{
+			jdbcTemplate.batchUpdate(
+				"insert into bag_pand (" +
+					"bag_pand_id," +
+					"aanduiding_record_inactief," +
+					"aanduiding_record_correctie," +
+					"officieel," +
+					"pand_geometrie," +
+					"bouwjaar," +
+					"pand_status," +
+					"begindatum_tijdvak_geldigheid," +
+					"einddatum_tijdvak_geldigheid," +
+					"in_onderzoek," +
+					"bron_documentdatum," +
+					"bron_documentnummer" +
+				") values (?,?,?,?,?,?,?,?,?,?,?,?)",
+				new BatchPreparedStatementSetter()
+				{
+					@Override
+					public void setValues(PreparedStatement ps, int i) throws SQLException
+					{
+						ps.setLong(1,panden.get(i).getIdentificatie());
+						ps.setInt(2,panden.get(i).getAanduidingRecordInactief().ordinal());
+						ps.setLong(3,panden.get(i).getAanduidingRecordCorrectie());
+						ps.setInt(4,panden.get(i).getOfficieel().ordinal());
+						ps.setString(5,panden.get(i).getPandGeometrie());
+						ps.setInt(6,panden.get(i).getBouwjaar());
+						ps.setString(7,panden.get(i).getPandStatus());
+						ps.setTimestamp(8,new Timestamp(panden.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+						if (panden.get(i).getEinddatumTijdvakGeldigheid() == null)
+							ps.setNull(9,Types.TIMESTAMP);
+						else
+							ps.setTimestamp(9,new Timestamp(panden.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+						ps.setInt(10,panden.get(i).getInOnderzoek().ordinal());
+						ps.setDate(11,new Date(panden.get(i).getDocumentdatum().getTime()));
+						ps.setString(12,panden.get(i).getDocumentnummer());
+					}
+					
+					@Override
+					public int getBatchSize()
+					{
+						return panden.size();
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting panden",e);
+		}
+	}
+
+	@Override
+	public void insertVerblijfsobjecten(final List<Verblijfsobject> verblijfsobjecten) throws DAOException
+	{
+		try
+		{
+			transactionTemplate.execute(
+				new TransactionCallbackWithoutResult()
+				{
+					@Override
+					protected void doInTransactionWithoutResult(TransactionStatus status)
+					{
+						jdbcTemplate.batchUpdate(
+							"insert into bag_verblijfsobject (" +
+								"bag_verblijfsobject_id," +
+								"aanduiding_record_inactief," +
+								"aanduiding_record_correctie," +
+								"officieel," +
+								"verblijfsobject_geometrie," +
+								"oppervlakte_verblijfsobject," +
+								"verblijfsobject_status," +
+								"begindatum_tijdvak_geldigheid," +
+								"einddatum_tijdvak_geldigheid," +
+								"in_onderzoek," +
+								"bron_documentdatum," +
+								"bron_documentnummer," +
+								"bag_nummeraanduiding_id" +
+							") values (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							new BatchPreparedStatementSetter()
+							{
+								@Override
+								public void setValues(PreparedStatement ps, int i) throws SQLException
+								{
+									ps.setLong(1,verblijfsobjecten.get(i).getIdentificatie());
+									ps.setInt(2,verblijfsobjecten.get(i).getAanduidingRecordInactief().ordinal());
+									ps.setLong(3,verblijfsobjecten.get(i).getAanduidingRecordCorrectie());
+									ps.setInt(4,verblijfsobjecten.get(i).getOfficieel().ordinal());
+									ps.setString(5,verblijfsobjecten.get(i).getVerblijfsobjectGeometrie());
+									ps.setInt(6,verblijfsobjecten.get(i).getOppervlakteVerblijfsobject());
+									ps.setInt(7,verblijfsobjecten.get(i).getVerblijfsobjectStatus().ordinal());
+									ps.setTimestamp(8,new Timestamp(verblijfsobjecten.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+									if (verblijfsobjecten.get(i).getEinddatumTijdvakGeldigheid() == null)
+										ps.setNull(9,Types.TIMESTAMP);
+									else
+										ps.setTimestamp(9,new Timestamp(verblijfsobjecten.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+									ps.setInt(10,verblijfsobjecten.get(i).getInOnderzoek().ordinal());
+									ps.setDate(11,new Date(verblijfsobjecten.get(i).getDocumentdatum().getTime()));
+									ps.setString(12,verblijfsobjecten.get(i).getDocumentnummer());
+									ps.setLong(13,verblijfsobjecten.get(i).getHoofdAdres());
+								}
+								
+								@Override
+								public int getBatchSize()
+								{
+									return verblijfsobjecten.size();
+								}
+							}
+						);
+						insertGebruikersdoelen(verblijfsobjecten);
+						insertNevenadressen(TypeAdresseerbaarObject.VERBLIJFSOBJECT,verblijfsobjecten);
+						insertGerelateerdePanden(verblijfsobjecten);
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting verblijfsobjecten",e);
+		}
+	}
+
+	@Override
+	public void insertLigplaatsen(final List<Ligplaats> ligplaatsen) throws DAOException
+	{
+		try
+		{
+			transactionTemplate.execute(
+				new TransactionCallbackWithoutResult()
+				{
+					@Override
+					protected void doInTransactionWithoutResult(TransactionStatus status)
+					{
+						jdbcTemplate.batchUpdate(
+							"insert into bag_ligplaats (" +
+								"bag_ligplaats_id," +
+								"aanduiding_record_inactief," +
+								"aanduiding_record_correctie," +
+								"officieel," +
+								"ligplaats_status," +
+								"ligplaats_geometrie," +
+								"begindatum_tijdvak_geldigheid," +
+								"einddatum_tijdvak_geldigheid," +
+								"in_onderzoek," +
+								"bron_documentdatum," +
+								"bron_documentnummer," +
+								"bag_nummeraanduiding_id" +
+							") values (?,?,?,?,?,?,?,?,?,?,?,?)",
+							new BatchPreparedStatementSetter()
+							{
+								@Override
+								public void setValues(PreparedStatement ps, int i) throws SQLException
+								{
+									ps.setLong(1,ligplaatsen.get(i).getIdentificatie());
+									ps.setInt(2,ligplaatsen.get(i).getAanduidingRecordInactief().ordinal());
+									ps.setLong(3,ligplaatsen.get(i).getAanduidingRecordCorrectie());
+									ps.setInt(4,ligplaatsen.get(i).getOfficieel().ordinal());
+									ps.setInt(5,ligplaatsen.get(i).getLigplaatsStatus().ordinal());
+									ps.setString(6,ligplaatsen.get(i).getLigplaatsGeometrie());
+									ps.setTimestamp(7,new Timestamp(ligplaatsen.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+									if (ligplaatsen.get(i).getEinddatumTijdvakGeldigheid() == null)
+										ps.setNull(8,Types.TIMESTAMP);
+									else
+										ps.setTimestamp(8,new Timestamp(ligplaatsen.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+									ps.setInt(9,ligplaatsen.get(i).getInOnderzoek().ordinal());
+									ps.setDate(10,new Date(ligplaatsen.get(i).getDocumentdatum().getTime()));
+									ps.setString(11,ligplaatsen.get(i).getDocumentnummer());
+									ps.setLong(12,ligplaatsen.get(i).getHoofdAdres());
+								}
+								
+								@Override
+								public int getBatchSize()
+								{
+									return ligplaatsen.size();
+								}
+							}
+						);
+						insertNevenadressen(TypeAdresseerbaarObject.LIGPLAATS,ligplaatsen);
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting ligplaatsen",e);
+		}
+	}
+
+	@Override
+	public void insertStandplaatsen(final List<Standplaats> standplaatsen) throws DAOException
+	{
+		try
+		{
+			transactionTemplate.execute(
+				new TransactionCallbackWithoutResult()
+				{
+					@Override
+					protected void doInTransactionWithoutResult(TransactionStatus status)
+					{
+						jdbcTemplate.batchUpdate(
+							"insert into bag_standplaats (" +
+								"bag_standplaats_id," +
+								"aanduiding_record_inactief," +
+								"aanduiding_record_correctie," +
+								"officieel," +
+								"standplaats_status," +
+								"standplaats_geometrie," +
+								"begindatum_tijdvak_geldigheid," +
+								"einddatum_tijdvak_geldigheid," +
+								"in_onderzoek," +
+								"bron_documentdatum," +
+								"bron_documentnummer," +
+								"bag_nummeraanduiding_id" +
+							") values (?,?,?,?,?,?,?,?,?,?,?,?)",
+							new BatchPreparedStatementSetter()
+							{
+								@Override
+								public void setValues(PreparedStatement ps, int i) throws SQLException
+								{
+									ps.setLong(1,standplaatsen.get(i).getIdentificatie());
+									ps.setInt(2,standplaatsen.get(i).getAanduidingRecordInactief().ordinal());
+									ps.setLong(3,standplaatsen.get(i).getAanduidingRecordCorrectie());
+									ps.setInt(4,standplaatsen.get(i).getOfficieel().ordinal());
+									ps.setInt(5,standplaatsen.get(i).getStandplaatsStatus().ordinal());
+									ps.setString(6,standplaatsen.get(i).getStandplaatsGeometrie());
+									ps.setTimestamp(7,new Timestamp(standplaatsen.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+									if (standplaatsen.get(i).getEinddatumTijdvakGeldigheid() == null)
+										ps.setNull(8,Types.TIMESTAMP);
+									else
+										ps.setTimestamp(8,new Timestamp(standplaatsen.get(i).getEinddatumTijdvakGeldigheid().getTime()));
+									ps.setInt(9,standplaatsen.get(i).getInOnderzoek().ordinal());
+									ps.setDate(10,new Date(standplaatsen.get(i).getDocumentdatum().getTime()));
+									ps.setString(11,standplaatsen.get(i).getDocumentnummer());
+									ps.setLong(12,standplaatsen.get(i).getHoofdAdres());
+								}
+								
+								@Override
+								public int getBatchSize()
+								{
+									return standplaatsen.size();
+								}
+							}
+						);
+						insertNevenadressen(TypeAdresseerbaarObject.STANDPLAATS,standplaatsen);
+					}
+				}
+			);
+		}
+		catch (DataAccessException e)
+		{
+			throw new DAOException("Error inserting standplaatsen",e);
 		}
 	}
 
@@ -1562,6 +2017,39 @@ public abstract class AbstractBAGDAO implements BAGDAO
 		);
 	}
 
+	protected void insertGebruikersdoelen(final List<Verblijfsobject> verblijfsobjecten)
+	{
+		final List<Gebruiksdoel> batch = new ArrayList<Gebruiksdoel>();
+		for (Verblijfsobject verblijfsobject : verblijfsobjecten)
+			for (nl.kadaster.schemas.imbag.imbag_types.v20090901.Gebruiksdoel gebruiksdoel : verblijfsobject.getGebruiksdoelenVerblijfsobject())
+				batch.add(new Gebruiksdoel(verblijfsobject,gebruiksdoel));
+		jdbcTemplate.batchUpdate(
+			"insert into bag_gebruiksdoel (" +
+				"bag_verblijfsobject_id," +
+				"aanduiding_record_correctie," +
+				"begindatum_tijdvak_geldigheid," +
+				"gebruiksdoel" +
+			") values (?,?,?,?)",
+			new BatchPreparedStatementSetter()
+			{
+				@Override
+				public void setValues(PreparedStatement ps, int i) throws SQLException
+				{
+					ps.setLong(1,batch.get(i).getIdentificatie());
+					ps.setLong(2,batch.get(i).getAanduidingRecordCorrectie());
+					ps.setTimestamp(3,new Timestamp(batch.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+					ps.setInt(4,batch.get(i).getGebruiksdoel().ordinal());
+				}
+				
+				@Override
+				public int getBatchSize()
+				{
+					return batch.size();
+				}
+			}
+		);
+	}
+
 	protected void deleteGebruikersdoelen(final Verblijfsobject verblijfsobject)
 	{
 		jdbcTemplate.batchUpdate(
@@ -1619,6 +2107,41 @@ public abstract class AbstractBAGDAO implements BAGDAO
 		);
 	}
 
+	protected void insertNevenadressen(final TypeAdresseerbaarObject objectType, final List<? extends BAGAdresseerbaarObject> objects)
+	{
+		final List<NevenAdres> batch = new ArrayList<NevenAdres>();
+		for (BAGAdresseerbaarObject object : objects)
+			for (Long nevenAdres : object.getNevenAdressen())
+				batch.add(new NevenAdres(object,nevenAdres));
+		jdbcTemplate.batchUpdate(
+			"insert into bag_neven_adres (" +
+				"bag_object_id," +
+				"aanduiding_record_correctie," +
+				"begindatum_tijdvak_geldigheid," +
+				"bag_object_type," +
+				"bag_nummeraanduiding_id" +
+			") values (?,?,?,?,?)",
+			new BatchPreparedStatementSetter()
+			{
+				@Override
+				public void setValues(PreparedStatement ps, int i) throws SQLException
+				{
+					ps.setLong(1,batch.get(i).getIdentificatie());
+					ps.setLong(2,batch.get(i).getAanduidingRecordCorrectie());
+					ps.setTimestamp(3,new Timestamp(batch.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+					ps.setInt(4,objectType.ordinal());
+					ps.setLong(5,batch.get(i).getNevenAdres());
+				}
+				
+				@Override
+				public int getBatchSize()
+				{
+					return batch.size();
+				}
+			}
+		);
+	}
+
 	protected void deleteNevenadressen(final TypeAdresseerbaarObject objectType, final BAGAdresseerbaarObject object)
 	{
 		jdbcTemplate.batchUpdate(
@@ -1671,6 +2194,39 @@ public abstract class AbstractBAGDAO implements BAGDAO
 				public int getBatchSize()
 				{
 					return verblijfsobject.getGerelateerdPanden().size();
+				}
+			}
+		);
+	}
+
+	protected void insertGerelateerdePanden(final List<Verblijfsobject> verblijfsobjecten)
+	{
+		final List<GerelateerdPand> batch = new ArrayList<GerelateerdPand>();
+		for (Verblijfsobject verblijfsobject : verblijfsobjecten)
+			for (Long gerelateerdPand : verblijfsobject.getGerelateerdPanden())
+				batch.add(new GerelateerdPand(verblijfsobject,gerelateerdPand));
+		jdbcTemplate.batchUpdate(
+			"insert into bag_gerelateerd_pand (" +
+				"bag_verblijfsobject_id," +
+				"aanduiding_record_correctie," +
+				"begindatum_tijdvak_geldigheid," +
+				"bag_pand_id" +
+			") values (?,?,?,?)",
+			new BatchPreparedStatementSetter()
+			{
+				@Override
+				public void setValues(PreparedStatement ps, int i) throws SQLException
+				{
+					ps.setLong(1,batch.get(i).getIdentificatie());
+					ps.setLong(2,batch.get(i).getAanduidingRecordCorrectie());
+					ps.setTimestamp(3,new Timestamp(batch.get(i).getBegindatumTijdvakGeldigheid().getTime()));
+					ps.setLong(4,batch.get(i).getGerelateerdPand());
+				}
+				
+				@Override
+				public int getBatchSize()
+				{
+					return batch.size();
 				}
 			}
 		);

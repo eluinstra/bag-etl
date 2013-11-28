@@ -15,6 +15,8 @@
  */
 package nl.ordina.bag.etl.dao;
 
+import java.util.List;
+
 import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.model.Ligplaats;
 import nl.ordina.bag.etl.model.Nummeraanduiding;
@@ -43,6 +45,14 @@ public interface BAGDAO
 	void insert(Verblijfsobject verblijfsobject) throws DAOException;
 	void insert(Ligplaats ligplaats) throws DAOException;
 	void insert(Standplaats standplaats) throws DAOException;
+
+	void insertWoonplaatsen(List<Woonplaats> woonplaatsen) throws DAOException;
+	void insertOpenbareRuimten(List<OpenbareRuimte> openbareRuimten) throws DAOException;
+	void insertNummeraanduidingen(List<Nummeraanduiding> nummeraanduidingen) throws DAOException;
+	void insertPanden(List<Pand> panden) throws DAOException;
+	void insertVerblijfsobjecten(List<Verblijfsobject> verblijfsobjecten) throws DAOException;
+	void insertLigplaatsen(List<Ligplaats> ligplaatsen) throws DAOException;
+	void insertStandplaatsen(List<Standplaats> standplaatsen) throws DAOException;
 
 	void update(Woonplaats woonplaats) throws DAOException;
 	void update(OpenbareRuimte openbareRuimte) throws DAOException;
