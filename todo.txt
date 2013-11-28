@@ -1,0 +1,4 @@
+- make ExtractHandler a property of ExtractParser instead of an interface/extension?
+	- turn ExtractHandler into an abstract class with:
+		- public method parse(InputStream)
+		- abstract methods handle()
