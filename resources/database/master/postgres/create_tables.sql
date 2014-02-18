@@ -52,6 +52,7 @@ CREATE TABLE bag_openbare_ruimte
 	bron_documentnummer						VARCHAR(20)		NULL,
 	openbareruimte_status					NUMERIC(1)		NOT NULL,
 	bag_woonplaats_id							NUMERIC(4)		NOT NULL,
+	verkorte_openbare_ruimte_naam	VARCHAR(80)		NULL,
 	CONSTRAINT u_bag_openbare_ruimte_id UNIQUE (bag_openbare_ruimte_id,begindatum_tijdvak_geldigheid,aanduiding_record_correctie)
 );
 

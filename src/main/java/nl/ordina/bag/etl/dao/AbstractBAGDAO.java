@@ -319,8 +319,9 @@ public abstract class AbstractBAGDAO implements BAGDAO
 								"bron_documentdatum," +
 								"bron_documentnummer," +
 								"openbareruimte_status," +
-								"bag_woonplaats_id" +
-							") values (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+								"bag_woonplaats_id," +
+								"verkorte_openbare_ruimte_naam" +
+							") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 						);
 						ps.setLong(1,openbareRuimte.getIdentificatie());
 						ps.setInt(2,openbareRuimte.getAanduidingRecordInactief().ordinal());
@@ -338,6 +339,7 @@ public abstract class AbstractBAGDAO implements BAGDAO
 						ps.setString(11,openbareRuimte.getDocumentnummer());
 						ps.setInt(12,openbareRuimte.getOpenbareruimteStatus().ordinal());
 						ps.setLong(13,openbareRuimte.getGerelateerdeWoonplaats());
+						ps.setString(14,openbareRuimte.getVerkorteOpenbareRuimteNaam());
 						return ps;
 					}
 				}
@@ -745,8 +747,9 @@ public abstract class AbstractBAGDAO implements BAGDAO
 					"bron_documentdatum," +
 					"bron_documentnummer," +
 					"openbareruimte_status," +
-					"bag_woonplaats_id" +
-				") values (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+					"bag_woonplaats_id," +
+					"verkorte_openbare_ruimte_naam" +
+				") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 				new BatchPreparedStatementSetter()
 				{
 					@Override
@@ -768,6 +771,7 @@ public abstract class AbstractBAGDAO implements BAGDAO
 						ps.setString(11,openbareRuimten.get(i).getDocumentnummer());
 						ps.setInt(12,openbareRuimten.get(i).getOpenbareruimteStatus().ordinal());
 						ps.setLong(13,openbareRuimten.get(i).getGerelateerdeWoonplaats());
+						ps.setString(14,openbareRuimten.get(i).getVerkorteOpenbareRuimteNaam());
 					}
 					
 					@Override
@@ -1194,7 +1198,8 @@ public abstract class AbstractBAGDAO implements BAGDAO
 							" bron_documentdatum = ?," +
 							" bron_documentnummer = ?," +
 							" openbareruimte_status = ?," +
-							" bag_woonplaats_id = ?" +
+							" bag_woonplaats_id = ?," +
+							" verkorte_openbare_ruimte_naam = ?" +
 							" where bag_openbare_ruimte_id = ?" +
 							" and aanduiding_record_correctie = ?" +
 							" and begindatum_tijdvak_geldigheid = ?"
@@ -1212,9 +1217,10 @@ public abstract class AbstractBAGDAO implements BAGDAO
 						ps.setString(8,openbareRuimte.getDocumentnummer());
 						ps.setInt(9,openbareRuimte.getOpenbareruimteStatus().ordinal());
 						ps.setLong(10,openbareRuimte.getGerelateerdeWoonplaats());
-						ps.setLong(11,openbareRuimte.getIdentificatie());
-						ps.setLong(12,openbareRuimte.getAanduidingRecordCorrectie());
-						ps.setTimestamp(13,new Timestamp(openbareRuimte.getBegindatumTijdvakGeldigheid().getTime()));
+						ps.setString(11,openbareRuimte.getVerkorteOpenbareRuimteNaam());
+						ps.setLong(12,openbareRuimte.getIdentificatie());
+						ps.setLong(13,openbareRuimte.getAanduidingRecordCorrectie());
+						ps.setTimestamp(14,new Timestamp(openbareRuimte.getBegindatumTijdvakGeldigheid().getTime()));
 						return ps;
 					}
 				}
@@ -1624,7 +1630,8 @@ public abstract class AbstractBAGDAO implements BAGDAO
 							" bron_documentdatum = ?," +
 							" bron_documentnummer = ?," +
 							" openbareruimte_status = ?," +
-							" bag_woonplaats_id = ?" +
+							" bag_woonplaats_id = ?," +
+							" verkorte_openbare_ruimte_naam = ?" +
 							" where bag_openbare_ruimte_id = ?" +
 							" and aanduiding_record_correctie = ?" +
 							" and begindatum_tijdvak_geldigheid = ?"
@@ -1643,9 +1650,10 @@ public abstract class AbstractBAGDAO implements BAGDAO
 						ps.setString(9,mutation.getDocumentnummer());
 						ps.setInt(10,mutation.getOpenbareruimteStatus().ordinal());
 						ps.setLong(11,mutation.getGerelateerdeWoonplaats());
-						ps.setLong(12,origineel.getIdentificatie());
-						ps.setLong(13,origineel.getAanduidingRecordCorrectie());
-						ps.setTimestamp(14,new Timestamp(origineel.getBegindatumTijdvakGeldigheid().getTime()));
+						ps.setString(12,mutation.getVerkorteOpenbareRuimteNaam());
+						ps.setLong(13,origineel.getIdentificatie());
+						ps.setLong(14,origineel.getAanduidingRecordCorrectie());
+						ps.setTimestamp(15,new Timestamp(origineel.getBegindatumTijdvakGeldigheid().getTime()));
 						return ps;
 					}
 				}

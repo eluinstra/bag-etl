@@ -24,6 +24,7 @@ public class OpenbareRuimteImpl extends AbstractBAGObject implements OpenbareRui
 	private TypeOpenbareRuimte openbareRuimteType;
 	private StatusNaamgeving openbareruimteStatus;
 	private long gerelateerdeWoonplaats;
+	private String verkorteOpenbareRuimteNaam;
 
 	public String getOpenbareRuimteNaam()
 	{
@@ -65,4 +66,13 @@ public class OpenbareRuimteImpl extends AbstractBAGObject implements OpenbareRui
 		this.gerelateerdeWoonplaats = gerelateerdeWoonplaats;
 	}
 
+	public String getVerkorteOpenbareRuimteNaam()
+	{
+		return verkorteOpenbareRuimteNaam;
+	}
+
+	public void setVerkorteOpenbareRuimteNaam(String verkorteOpenbareRuimteNaam)
+	{
+		this.verkorteOpenbareRuimteNaam = verkorteOpenbareRuimteNaam;
+	}
 }

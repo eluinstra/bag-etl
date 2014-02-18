@@ -132,4 +132,10 @@ public class BAGOpenbareRuimteImpl implements OpenbareRuimte
 		return Long.parseLong(openbareRuimte.getGerelateerdeWoonplaats().getIdentificatie());
 	}
 
+	@Override
+	public String getVerkorteOpenbareRuimteNaam()
+	{
+		return openbareRuimte.getVerkorteOpenbareruimteNaam();
+	}
+
 }

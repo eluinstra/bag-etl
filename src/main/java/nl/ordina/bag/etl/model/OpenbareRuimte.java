@@ -24,4 +24,5 @@ public interface OpenbareRuimte extends BAGObject
 	TypeOpenbareRuimte getOpenbareRuimteType();
 	StatusNaamgeving getOpenbareruimteStatus();
 	long getGerelateerdeWoonplaats();
+	String getVerkorteOpenbareRuimteNaam();
 }
