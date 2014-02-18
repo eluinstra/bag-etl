@@ -3,7 +3,5 @@
 		- public method parse(InputStream)
 		- abstract methods handle()
 
-- rename table 'primary keys' column to original name identificatie?
-- rename table 'foreign keys' to original name gerelateerde...?
 - use variable instead of hard coded numbers as parameter index in prepared statements?
-- store verblijfsobject, ligplaats and standplaats in 1 table verblijfsobject with verblijfsobjectType?
+- store verblijfsobject, ligplaats and standplaats in 1 table adresseerbaarObject with adresseerbaarObjectType?
