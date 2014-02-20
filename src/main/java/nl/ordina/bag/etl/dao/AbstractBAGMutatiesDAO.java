@@ -210,7 +210,7 @@ public abstract class AbstractBAGMutatiesDAO implements BAGMutatiesDAO
 							result.setTijdstipVerwerking(rs.getTimestamp("tijdstip_verwerking"));
 							result.setVolgnrVerwerking(rs.getInt("volgnr_verwerking"));
 							result.setObjectType(BAGObjectType.values()[rs.getInt("object_type")]);
-							result.setMutatieProduct(XMLMessageBuilder.getInstance(MutatieProduct.class).handle(rs.getString("mutatie_product"),MutatieProduct.class));
+							result.setMutatieProduct(XMLMessageBuilder.getInstance(MutatieProduct.class).handle(rs.getCharacterStream("mutatie_product"),MutatieProduct.class));
 							return result;
 						}
 						catch (JAXBException e)

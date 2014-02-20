@@ -94,15 +94,25 @@ public class XMLMessageBuilder<T>
 		return handle(null,r);
 	}
 
-	@SuppressWarnings("unchecked")
+	public T handle(Reader r, Class<T> clazz) throws JAXBException
+	{
+		return handle(null,r,clazz);
+	}
+
 	public T handle(Schema schema, Reader r) throws JAXBException
+	{
+		return handle(schema,r,null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public T handle(Schema schema, Reader r, Class<T> clazz) throws JAXBException
 	{
 		if (r == null)
 			return null;
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		if (schema != null)
 			unmarshaller.setSchema(schema);
-		Object o = unmarshaller.unmarshal(r);
+		Object o = clazz == null ? unmarshaller.unmarshal(r) : unmarshaller.unmarshal(new StreamSource(r),clazz);
 		if (o instanceof JAXBElement<?>)
 			return ((JAXBElement<T>)o).getValue();
 		else
