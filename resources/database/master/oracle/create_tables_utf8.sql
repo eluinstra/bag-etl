@@ -14,7 +14,7 @@ CREATE TABLE bag_mutatie
 	tijdstip_verwerking						TIMESTAMP			NOT NULL,
 	volgnr_verwerking							NUMBER(3)			NOT NULL,
 	object_type										NUMBER(1)			NOT NULL,
-	mutatie_product								CLOB					NOT NULL,
+	mutatie_product								NCLOB					NOT NULL,
 	CONSTRAINT u_bag_mutatie UNIQUE (tijdstip_verwerking,volgnr_verwerking)
 );
 
