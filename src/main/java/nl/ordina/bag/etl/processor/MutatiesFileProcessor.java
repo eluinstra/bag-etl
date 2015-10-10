@@ -97,7 +97,7 @@ public class MutatiesFileProcessor
 			{
 				logger.debug("Importing mutatie-product " + mutatieProduct.getVerwerking().getTijdstipVerwerking() + " - " + mutatieProduct.getVerwerking().getVolgnrVerwerking() + " [" + mutatieProduct.getVerwerking().getObjectType() + "]");
 				BAGMutatie mutatie = new BAGMutatie();
-				mutatie.setTijdstipVerwerking(mutatieProduct.getVerwerking().getTijdstipVerwerking().toGregorianCalendar().getTime());
+				mutatie.setTijdstipVerwerking(mutatieProduct.getVerwerking().getTijdstipVerwerking());
 				mutatie.setVolgnrVerwerking(mutatieProduct.getVerwerking().getVolgnrVerwerking().intValue());
 				mutatie.setObjectType(BAGObjectType.getBAGObjectType(mutatieProduct.getVerwerking().getObjectType()));
 				mutatie.setMutatieProduct(mutatieProduct);

@@ -20,7 +20,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -30,6 +29,7 @@ import nl.kadaster.schemas.bag_verstrekkingen.extract_producten_lvc.v20090901.Mu
 import nl.ordina.bag.etl.dao.AbstractBAGMutatiesDAO;
 import nl.ordina.bag.etl.dao.DAOException;
 import nl.ordina.bag.etl.model.mutatie.BAGMutatie;
+import nl.ordina.bag.etl.util.Utils;
 import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 
 import org.springframework.dao.DataAccessException;
@@ -131,7 +131,7 @@ public class BAGMutatiesDAOImpl extends AbstractBAGMutatiesDAO
 									"mutatie_product" +
 								") values ((select coalesce(max(id),0) + 1 from bag_mutatie),?,?,?,?)"
 							);
-							ps.setTimestamp(1,new Timestamp(mutatie.getTijdstipVerwerking().getTime()));
+							ps.setTimestamp(1,Utils.toTimestamp(mutatie.getTijdstipVerwerking()));
 							ps.setLong(2,mutatie.getVolgnrVerwerking());
 							ps.setInt(3,mutatie.getObjectType().ordinal());
 							ps.setString(4,XMLMessageBuilder.getInstance(MutatieProduct.class).handle(new JAXBElement<MutatieProduct>(new QName("http://www.kadaster.nl/schemas/bag-verstrekkingen/extract-producten-lvc/v20090901","Mutatie-product"),MutatieProduct.class,mutatie.getMutatieProduct())));

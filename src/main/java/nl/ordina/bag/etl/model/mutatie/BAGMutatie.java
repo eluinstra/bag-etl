@@ -15,7 +15,7 @@
  */
 package nl.ordina.bag.etl.model.mutatie;
 
-import java.util.Date;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import nl.kadaster.schemas.bag_verstrekkingen.extract_producten_lvc.v20090901.MutatieProduct;
 import nl.ordina.bag.etl.Constants.BAGObjectType;
@@ -23,7 +23,7 @@ import nl.ordina.bag.etl.Constants.BAGObjectType;
 public class BAGMutatie
 {
 	private long id;
-	private Date tijdstipVerwerking;
+	private XMLGregorianCalendar tijdstipVerwerking;
 	private int volgnrVerwerking;
 	private BAGObjectType objectType;
 	private MutatieProduct mutatieProduct;
@@ -32,7 +32,7 @@ public class BAGMutatie
 	{
 	}
 
-	public BAGMutatie(Date tijdstipVerwerking, int volgnrVerwerking, BAGObjectType objectType, MutatieProduct mutatieProduct)
+	public BAGMutatie(XMLGregorianCalendar tijdstipVerwerking, int volgnrVerwerking, BAGObjectType objectType, MutatieProduct mutatieProduct)
 	{
 		this.tijdstipVerwerking = tijdstipVerwerking;
 		this.volgnrVerwerking = volgnrVerwerking;
@@ -50,12 +50,12 @@ public class BAGMutatie
 		this.id = id;
 	}
 
-	public Date getTijdstipVerwerking()
+	public XMLGregorianCalendar getTijdstipVerwerking()
 	{
 		return tijdstipVerwerking;
 	}
 	
-	public void setTijdstipVerwerking(Date tijdstipVerwerking)
+	public void setTijdstipVerwerking(XMLGregorianCalendar tijdstipVerwerking)
 	{
 		this.tijdstipVerwerking = tijdstipVerwerking;
 	}

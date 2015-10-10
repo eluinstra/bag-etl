@@ -20,7 +20,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -32,6 +31,7 @@ import nl.ordina.bag.etl.Constants.BAGObjectType;
 import nl.ordina.bag.etl.Constants.ProcessingStatus;
 import nl.ordina.bag.etl.model.mutatie.BAGMutatie;
 import nl.ordina.bag.etl.model.mutatie.MutatiesFile;
+import nl.ordina.bag.etl.util.Utils;
 import nl.ordina.bag.etl.xml.XMLMessageBuilder;
 
 import org.apache.commons.logging.Log;
@@ -207,7 +207,7 @@ public abstract class AbstractBAGMutatiesDAO implements BAGMutatiesDAO
 						{
 							BAGMutatie result = new BAGMutatie();
 							result.setId(rs.getLong("id"));
-							result.setTijdstipVerwerking(rs.getTimestamp("tijdstip_verwerking"));
+							result.setTijdstipVerwerking(Utils.toXMLGregorianCalendar(rs.getTimestamp("tijdstip_verwerking")));
 							result.setVolgnrVerwerking(rs.getInt("volgnr_verwerking"));
 							result.setObjectType(BAGObjectType.values()[rs.getInt("object_type")]);
 							result.setMutatieProduct(XMLMessageBuilder.getInstance(MutatieProduct.class).handle(rs.getCharacterStream("mutatie_product"),MutatieProduct.class));
@@ -250,7 +250,7 @@ public abstract class AbstractBAGMutatiesDAO implements BAGMutatiesDAO
 									"mutatie_product" +
 								") values ((select nvl(max(id),0) + 1 from bag_mutatie),?,?,?,?)"
 							);
-							ps.setTimestamp(1,new Timestamp(mutatie.getTijdstipVerwerking().getTime()));
+							ps.setTimestamp(1,Utils.toTimestamp(mutatie.getTijdstipVerwerking()));
 							ps.setLong(2,mutatie.getVolgnrVerwerking());
 							ps.setInt(3,mutatie.getObjectType().ordinal());
 							ps.setString(4,XMLMessageBuilder.getInstance(MutatieProduct.class).handle(new JAXBElement<MutatieProduct>(new QName("http://www.kadaster.nl/schemas/bag-verstrekkingen/extract-producten-lvc/v20090901","Mutatie-product"),MutatieProduct.class,mutatie.getMutatieProduct())));
